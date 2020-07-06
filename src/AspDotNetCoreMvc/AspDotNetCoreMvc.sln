@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "HelloWorld\HelloWorld.csproj", "{E50884F1-4F3A-4D45-B3B9-D0254A13C4BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorldWithController", "HelloWorldWithController\HelloWorldWithController.csproj", "{EC9F5268-76D9-473E-8DBF-D1FF98DD2E65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E50884F1-4F3A-4D45-B3B9-D0254A13C4BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E50884F1-4F3A-4D45-B3B9-D0254A13C4BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E50884F1-4F3A-4D45-B3B9-D0254A13C4BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC9F5268-76D9-473E-8DBF-D1FF98DD2E65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC9F5268-76D9-473E-8DBF-D1FF98DD2E65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC9F5268-76D9-473E-8DBF-D1FF98DD2E65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC9F5268-76D9-473E-8DBF-D1FF98DD2E65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
