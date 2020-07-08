@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChatApp.Models.Entities.DbEntities
 {
@@ -11,5 +8,8 @@ namespace ChatApp.Models.Entities.DbEntities
         public DateTime PostAt { get; set; }
         public string Message { get; set; }
         public string Name { get; set; }
+
+        public ChatLog(int id, DateTime postAt, string message, string name) =>
+            (Id, PostAt, Message, Name) = (id, postAt, message, name);
     }
 }
