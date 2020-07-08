@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using ChatApp.Models.Services;
+using ChatApp.Models.Services.Imp;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,9 +29,12 @@ namespace ChatApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddScoped<IDbConnection>(
-                _ => new SqlConnection(Configuration.GetConnectionString("DefaultConnection"))
-                );
+            services
+                .AddScoped<IDbConnection>(
+                    _ => new SqlConnection(Configuration.GetConnectionString("DefaultConnection"))
+                )
+                .AddScoped<IChatLogService, ChatLogService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
