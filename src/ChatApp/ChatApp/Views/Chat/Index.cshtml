@@ -1,7 +1,17 @@
-﻿
+﻿@model IList<ChatLogViewModel>
+
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
 
+@foreach (var chatLog in Model)
+{
+    <div class="chat-log">
+        <span class="post-at">@chatLog.PostAt</span>
+        <div class="message">
+            <p>@chatLog.Message</p>
+        </div>
+    </div>
+}

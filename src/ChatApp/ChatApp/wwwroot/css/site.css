@@ -1,2 +1,33 @@
 ﻿body {
 }
+
+.chat-log {
+    margin-top: 20px;
+    float: right;
+    clear: both;
+}
+
+    .chat-log .post-at {
+        font-size: 70%;
+    }
+
+    .chat-log .message {
+        padding: 10px;
+        background: gray;
+        border-radius: 30px 30px 30px 30px;
+        color: white;
+        position: relative;
+    }
+
+        .chat-log .message p {
+            display: inline-block;
+        }
+
+            .chat-log .message p:after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                right: -19px;
+                border: 10px solid transparent;
+                border-left: 18px solid gray;
+            }
