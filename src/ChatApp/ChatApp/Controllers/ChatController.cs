@@ -19,9 +19,16 @@ namespace ChatApp.Controllers
             _chatMapper = chatMapper;
         }
 
+        private IActionResult GetIndexActionResult()
+        {
+            var chatLogs = _chatLogService.GetLatest();
+            return View(_chatMapper.FromChatLogToViewModel(chatLogs));
+        }
+
         public IActionResult Index()
         {
-            return View();
+            return GetIndexActionResult();
         }
+
     }
 }
