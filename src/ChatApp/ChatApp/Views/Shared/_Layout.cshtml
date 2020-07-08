@@ -7,9 +7,23 @@
     <link rel="stylesheet" type="text/css" href="~/css/site.css" />
 </head>
 <body>
-    <div>
-        @RenderBody()
+    <header>
+        <a class="brand" asp-controller="Chat" asp-action="Index">ChatApp</a>
+        <nav>
+            <ul>
+                <li><a asp-controller="Chat" asp-action="Index">ChatApp</a></li>
+                <li><a asp-controller="Chat" asp-action="Index">TBA</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="wrapper">
+        <main role="main">
+            @RenderBody()
+        </main>
     </div>
-    <script type="text/javascript" href="~/js/site.js" asp-append-version="true"></script>
+    <footer class="footer wrapper">
+        BC2020
+    </footer>
+    <script type="text/javascript" src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>
