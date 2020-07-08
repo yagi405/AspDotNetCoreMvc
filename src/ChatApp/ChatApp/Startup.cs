@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using ChatApp.Models.Mappers;
+using ChatApp.Models.Mappers.Imp;
 using ChatApp.Models.Services;
 using ChatApp.Models.Services.Imp;
 using Microsoft.AspNetCore.Builder;
@@ -33,7 +35,8 @@ namespace ChatApp
                 .AddScoped<IDbConnection>(
                     _ => new SqlConnection(Configuration.GetConnectionString("DefaultConnection"))
                 )
-                .AddScoped<IChatLogService, ChatLogService>();
+                .AddScoped<IChatLogService, ChatLogService>()
+                .AddScoped<IChatMapper, ChatMapper>();
 
         }
 
