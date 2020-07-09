@@ -1,10 +1,12 @@
 ﻿using ChatApp.Models.Entities.ViewEntities;
 using ChatApp.Models.Mappers;
 using ChatApp.Models.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatApp.Controllers
 {
+    [Authorize]
     public class ChatController : Controller
     {
         private readonly IChatLogService _chatLogService;
