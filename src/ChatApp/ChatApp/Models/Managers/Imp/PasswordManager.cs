@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -6,20 +7,18 @@ namespace ChatApp.Models.Managers.Imp
 {
     public class PasswordManager : IPasswordManager
     {
-        public bool IsMatch(string plain, string hashed)
+        public bool IsMatch(string plainPassword, string hashedPassword)
         {
-            if (string.IsNullOrEmpty(plain))
+            if (string.IsNullOrEmpty(plainPassword))
             {
                 return false;
             }
 
-            var bytes = Encoding.UTF8.GetBytes(plain);
-
+            var bytes = Encoding.UTF8.GetBytes(plainPassword);
             using var sha = new SHA256CryptoServiceProvider();
-            var hashedBytes = sha.ComputeHash(bytes);
-            var hashedString = Convert.ToBase64String(hashedBytes);
+            var src = sha.ComputeHash(bytes);
 
-            return hashedString == hashed;
+            return src.SequenceEqual(Convert.FromBase64String(hashedPassword));
         }
     }
 }
