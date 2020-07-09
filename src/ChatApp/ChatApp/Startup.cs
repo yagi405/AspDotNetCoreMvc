@@ -45,7 +45,8 @@ namespace ChatApp
                     _ => new SqlConnection(Configuration.GetConnectionString("DefaultConnection"))
                 )
                 .AddScoped<IChatLogService, ChatLogService>()
-                .AddScoped<IChatMapper, ChatMapper>();
+                .AddScoped<IChatMapper, ChatMapper>()
+                .AddScoped<IAuthenticationService, AuthenticationService>();
 
         }
 

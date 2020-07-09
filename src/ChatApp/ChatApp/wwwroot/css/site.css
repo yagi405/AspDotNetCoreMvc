@@ -146,6 +146,10 @@ textarea {
         border: solid 2px gray;
     }
 
+.text-danger {
+    color: #dc3545;
+}
+
 textarea.input-text {
     width: 100%;
 }
