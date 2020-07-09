@@ -7,6 +7,6 @@ namespace ChatApp.Models.Services
     {
         IList<ChatLog> GetLatest(int count = 20);
 
-        void Post(string message);
+        void Post(string message, string name);
     }
 }

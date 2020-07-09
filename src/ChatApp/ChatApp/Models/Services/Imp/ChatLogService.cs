@@ -38,20 +38,24 @@ order by
             return chatLogs;
         }
 
-        public void Post(string message)
+        public void Post(string message, string name)
         {
             const string cmdText = @"
 insert into 
 	ChatLogs(PostAt,Message,Name)
 Values
-	(SYSDATETIME(),@message,null)
+	(SYSDATETIME(),@message,@name)
 ";
             using var cmd = Connection.CreateCommand();
             cmd.CommandText = cmdText;
-            var param = cmd.CreateParameter();
-            param.ParameterName = "@message";
-            param.Value = message;
-            cmd.Parameters.Add(param);
+            var pMessage = cmd.CreateParameter();
+            pMessage.ParameterName = "@message";
+            pMessage.Value = message;
+            cmd.Parameters.Add(pMessage);
+            var pName = cmd.CreateParameter();
+            pName.ParameterName = "@name";
+            pName.Value = name;
+            cmd.Parameters.Add(pName);
 
             cmd.ExecuteNonQuery();
         }

@@ -38,7 +38,7 @@ namespace ChatApp.Controllers
 
             if (!string.IsNullOrEmpty(model.Message))
             {
-                _chatLogService.Post(model.Message);
+                _chatLogService.Post(model.Message,User.Identity.Name);
             }
 
             //Post-Redirect-Get

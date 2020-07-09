@@ -91,10 +91,6 @@ label {
     float: right;
 }
 
-    .chat-log .post-at {
-        font-size: 70%;
-    }
-
     .chat-log .message {
         padding: 10px;
         background: gray;
@@ -148,6 +144,11 @@ textarea {
 
 .text-danger {
     color: #dc3545;
+}
+
+.small {
+    font-size: 70%;
+    display: block;
 }
 
 textarea.input-text {

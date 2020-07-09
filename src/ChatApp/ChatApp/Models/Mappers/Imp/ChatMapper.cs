@@ -14,6 +14,7 @@ namespace ChatApp.Models.Mappers.Imp
                 {
                     PostAt = x.PostAt,
                     Message = x.Message,
+                    Name = x.Name,
                 })
                 .ToList();
 
