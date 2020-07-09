@@ -2,6 +2,6 @@
 {
     public interface IPasswordManager
     {
-        bool IsMatch(string plain, string hashed);
+        bool IsMatch(string plainPassword, string salt, string hashedPassword);
     }
 }

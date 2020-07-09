@@ -39,7 +39,7 @@ namespace ChatApp.Models.Services.Imp
                     }
                     break;
                 case PasswordType.Hashed:
-                    if (!_passwordManager.IsMatch(password, user.Password))
+                    if (!_passwordManager.IsMatch(password, user.PasswordSalt, user.Password))
                     {
                         return null;
                     }
