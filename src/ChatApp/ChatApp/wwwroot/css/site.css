@@ -63,6 +63,23 @@ body {
     color: white;
 }
 
+.form-group {
+    margin-bottom: 1rem;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid #000000;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
 .chat-logs > div:after {
     content: "";
     display: block;
@@ -109,7 +126,7 @@ textarea {
     display: flex;
 }
 
-.btn, .input-message {
+.btn, .input-text {
     outline: none;
     font-size: 16px;
     font-weight: bold;
@@ -117,17 +134,22 @@ textarea {
     border-radius: 0.25rem;
 }
 
-.input-message {
-    width: 100%;
+.input-text {
+    display: block;
     padding: 0.375rem 0.75rem;
     border: 1px solid #ced4da;
 }
 
-    .input-message:focus {
+    .input-text:focus {
         box-shadow: 0 .25rem .75rem #000000;
         box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
         border: solid 2px gray;
     }
+
+textarea.input-text {
+    width: 100%;
+}
+
 
 .btn {
     color: white;

@@ -67,7 +67,7 @@ namespace ChatApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Chat}/{action=Index}/{id?}"
+                    pattern: "{controller=Account}/{action=Login}/{id?}"
                 );
             });
         }
