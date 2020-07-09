@@ -8,6 +8,7 @@ using ChatApp.Models.Mappers;
 using ChatApp.Models.Mappers.Imp;
 using ChatApp.Models.Services;
 using ChatApp.Models.Services.Imp;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +32,14 @@ namespace ChatApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new PathString("/Account/Login");
+                    options.SlidingExpiration = true;
+                });
+
             services
                 .AddScoped<IDbConnection>(
                     _ => new SqlConnection(Configuration.GetConnectionString("DefaultConnection"))
@@ -51,6 +60,8 @@ namespace ChatApp
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
