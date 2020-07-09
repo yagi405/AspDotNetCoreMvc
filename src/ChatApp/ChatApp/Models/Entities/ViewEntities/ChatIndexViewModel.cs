@@ -22,6 +22,7 @@ namespace ChatApp.Models.Entities.ViewEntities
             public string Message { get; set; }
             public string Name { get; set; }
             public string IconUrl { get; set; }
+            public bool IsMine { get; set; }
         }
     }
 }

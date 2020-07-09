@@ -123,22 +123,22 @@ label {
         }
 
 
-.own .chat-log {
+.mine .chat-log {
     float: right;
 }
 
-    .own .chat-log .icon {
+    .mine .chat-log .icon {
         float: right;
         margin-right: 0;
         margin-left: 12px;
     }
 
-    .own .chat-log .message {
+    .mine .chat-log .message {
         background: gray;
         color: white;
     }
 
-        .own .chat-log .message p:after {
+        .mine .chat-log .message p:after {
             right: -19px;
             left: auto;
             border: 8px solid transparent;

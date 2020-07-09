@@ -26,7 +26,7 @@ namespace ChatApp.Models.Mappers.Imp
             .Select(x => IconUrlBase + x)
             .ToList();
 
-        public ChatIndexViewModel FromChatLogToViewModel(IList<ChatLog> chatLogs)
+        public ChatIndexViewModel FromChatLogToViewModel(IList<ChatLog> chatLogs, string userName)
         {
             var details = chatLogs
                 .Select(x => new ChatIndexViewModel.Detail()
@@ -34,7 +34,11 @@ namespace ChatApp.Models.Mappers.Imp
                     PostAt = x.PostAt,
                     Message = x.Message,
                     Name = x.Name,
-                    IconUrl = _defaultIcons[Math.Abs(x.Name?.GetHashCode() % _defaultIcons.Count ?? 0)]
+                    IconUrl = _defaultIcons[
+                        Math.Abs(
+                            x.Name?.ToUpperInvariant().Select(c => (int)c).Sum() ?? 0
+                        ) % _defaultIcons.Count],
+                    IsMine = string.Equals(x.Name, userName, StringComparison.OrdinalIgnoreCase)
                 })
                 .ToList();
 

@@ -19,7 +19,7 @@ namespace ChatApp.Controllers
         private IActionResult GetIndexActionResult()
         {
             var chatLogs = _chatLogService.GetLatest();
-            return View(_chatMapper.FromChatLogToViewModel(chatLogs));
+            return View(_chatMapper.FromChatLogToViewModel(chatLogs, User.Identity.Name));
         }
 
         [HttpGet]
@@ -38,7 +38,7 @@ namespace ChatApp.Controllers
 
             if (!string.IsNullOrEmpty(model.Message))
             {
-                _chatLogService.Post(model.Message,User.Identity.Name);
+                _chatLogService.Post(model.Message, User.Identity.Name);
             }
 
             //Post-Redirect-Get
