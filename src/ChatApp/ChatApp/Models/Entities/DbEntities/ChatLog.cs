@@ -7,9 +7,9 @@ namespace ChatApp.Models.Entities.DbEntities
         public int Id { get; set; }
         public DateTime PostAt { get; set; }
         public string Message { get; set; }
-        public string Name { get; set; }
+        public string UserId { get; set; }
 
-        public ChatLog(int id, DateTime postAt, string message, string name) =>
-            (Id, PostAt, Message, Name) = (id, postAt, message, name);
+        public ChatLog(int id, DateTime postAt, string message, string userId) =>
+            (Id, PostAt, Message, UserId) = (id, postAt, message, userId);
     }
 }

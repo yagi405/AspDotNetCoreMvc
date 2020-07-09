@@ -4,6 +4,6 @@ namespace ChatApp.Models.Services
 {
     public interface IAuthenticationService
     {
-        IIdentity Authenticate(string userName);
+        IIdentity Authenticate(string userId, string password);
     }
 }

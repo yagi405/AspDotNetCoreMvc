@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using ChatApp.Models.Managers;
+using ChatApp.Models.Managers.Imp;
 using ChatApp.Models.Mappers;
 using ChatApp.Models.Mappers.Imp;
 using ChatApp.Models.Services;
@@ -46,7 +48,9 @@ namespace ChatApp
                 )
                 .AddScoped<IChatLogService, ChatLogService>()
                 .AddScoped<IChatMapper, ChatMapper>()
-                .AddScoped<IAuthenticationService, AuthenticationService>();
+                .AddScoped<IAuthenticationService, AuthenticationService>()
+                .AddScoped<IPasswordManager, PasswordManager>()
+                .AddScoped<IUserService, UserService>();
 
         }
 

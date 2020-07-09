@@ -16,7 +16,7 @@ select top {count}
     Id,
 	PostAt,
 	Message,
-	Name
+	UserId
 from
 	ChatLogs
 order by
@@ -32,19 +32,19 @@ order by
                     (int)reader["Id"],
                     (DateTime)reader["PostAt"],
                     reader["Message"] as string,
-                    reader["Name"] as string
+                    reader["UserId"] as string
                 ));
             }
             return chatLogs;
         }
 
-        public void Post(string message, string name)
+        public void Post(string message, string userId)
         {
             const string cmdText = @"
 insert into 
-	ChatLogs(PostAt,Message,Name)
+	ChatLogs(PostAt,Message,UserId)
 Values
-	(SYSDATETIME(),@message,@name)
+	(SYSDATETIME(),@message,@userId)
 ";
             using var cmd = Connection.CreateCommand();
             cmd.CommandText = cmdText;
@@ -52,10 +52,10 @@ Values
             pMessage.ParameterName = "@message";
             pMessage.Value = message;
             cmd.Parameters.Add(pMessage);
-            var pName = cmd.CreateParameter();
-            pName.ParameterName = "@name";
-            pName.Value = name;
-            cmd.Parameters.Add(pName);
+            var pUserId = cmd.CreateParameter();
+            pUserId.ParameterName = "@userId";
+            pUserId.Value = userId;
+            cmd.Parameters.Add(pUserId);
 
             cmd.ExecuteNonQuery();
         }

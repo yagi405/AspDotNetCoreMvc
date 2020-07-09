@@ -30,7 +30,7 @@ namespace ChatApp.Controllers
                 return BadRequest();
             }
 
-            var identity = _authenticationService.Authenticate(model.UserName);
+            var identity = _authenticationService.Authenticate(model.UserId, model.Password);
             if (identity == null)
             {
                 ModelState.AddModelError("", "ログインに失敗しました。");

@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using ChatApp.Models.Entities.DbEntities;
 using ChatApp.Models.Entities.ViewEntities;
+using ChatApp.Models.Services;
 
 namespace ChatApp.Models.Mappers.Imp
 {
     public class ChatMapper : IChatMapper
     {
+        private readonly IUserService _userService;
+
+        public ChatMapper(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         private const string IconUrlBase = "~/img/user/";
 
         private static readonly IReadOnlyList<string> _defaultIcons = new[]
@@ -26,19 +34,21 @@ namespace ChatApp.Models.Mappers.Imp
             .Select(x => IconUrlBase + x)
             .ToList();
 
-        public ChatIndexViewModel FromChatLogToViewModel(IList<ChatLog> chatLogs, string userName)
+        public ChatIndexViewModel FromChatLogToViewModel(IList<ChatLog> chatLogs, string userId)
         {
+            var users = _userService.GetAll();
+
             var details = chatLogs
                 .Select(x => new ChatIndexViewModel.Detail()
                 {
                     PostAt = x.PostAt,
                     Message = x.Message,
-                    Name = x.Name,
+                    Name = users.SingleOrDefault(u => u.UserId == x.UserId)?.Name,
                     IconUrl = _defaultIcons[
                         Math.Abs(
-                            x.Name?.ToUpperInvariant().Select(c => (int)c).Sum() ?? 0
+                            x.UserId?.ToUpperInvariant().Select(c => (int)c).Sum() ?? 0
                         ) % _defaultIcons.Count],
-                    IsMine = string.Equals(x.Name, userName, StringComparison.OrdinalIgnoreCase)
+                    IsMine = string.Equals(x.UserId, userId, StringComparison.OrdinalIgnoreCase)
                 })
                 .ToList();
 

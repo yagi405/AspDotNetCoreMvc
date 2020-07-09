@@ -1,4 +1,5 @@
 ﻿using ChatApp.Models.Entities.ViewEntities;
+using ChatApp.Models.Extensions;
 using ChatApp.Models.Mappers;
 using ChatApp.Models.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -21,7 +22,7 @@ namespace ChatApp.Controllers
         private IActionResult GetIndexActionResult()
         {
             var chatLogs = _chatLogService.GetLatest();
-            return View(_chatMapper.FromChatLogToViewModel(chatLogs, User.Identity.Name));
+            return View(_chatMapper.FromChatLogToViewModel(chatLogs, User.UserId()));
         }
 
         [HttpGet]
@@ -40,7 +41,7 @@ namespace ChatApp.Controllers
 
             if (!string.IsNullOrEmpty(model.Message))
             {
-                _chatLogService.Post(model.Message, User.Identity.Name);
+                _chatLogService.Post(model.Message, User.UserId());
             }
 
             //Post-Redirect-Get

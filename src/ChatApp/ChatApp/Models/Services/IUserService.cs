@@ -3,10 +3,10 @@ using ChatApp.Models.Entities.DbEntities;
 
 namespace ChatApp.Models.Services
 {
-    public interface IChatLogService
+    public interface IUserService
     {
-        IList<ChatLog> GetLatest(int count = 20);
+        User GetById(string userId);
 
-        void Post(string message, string userId);
+        IList<User> GetAll();
     }
 }
