@@ -6,5 +6,7 @@ namespace ChatApp.Models.Services
     public interface IChatLogService
     {
         IList<ChatLog> GetLatest(int count = 20);
+
+        void Post(string message);
     }
 }

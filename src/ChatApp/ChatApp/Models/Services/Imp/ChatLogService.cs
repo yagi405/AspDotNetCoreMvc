@@ -37,5 +37,23 @@ order by
             }
             return chatLogs;
         }
+
+        public void Post(string message)
+        {
+            const string cmdText = @"
+insert into 
+	ChatLogs(PostAt,Message,Name)
+Values
+	(SYSDATETIME(),@message,null)
+";
+            using var cmd = Connection.CreateCommand();
+            cmd.CommandText = cmdText;
+            var param = cmd.CreateParameter();
+            param.ParameterName = "@message";
+            param.Value = message;
+            cmd.Parameters.Add(param);
+
+            cmd.ExecuteNonQuery();
+        }
     }
 }

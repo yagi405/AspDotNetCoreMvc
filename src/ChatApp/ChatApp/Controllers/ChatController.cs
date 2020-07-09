@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ChatApp.Models.Entities.ViewEntities;
 using ChatApp.Models.Mappers;
 using ChatApp.Models.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -25,9 +22,27 @@ namespace ChatApp.Controllers
             return View(_chatMapper.FromChatLogToViewModel(chatLogs));
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return GetIndexActionResult();
+        }
+
+        [HttpPost]
+        public IActionResult Index(ChatIndexViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            if (!string.IsNullOrEmpty(model.Message))
+            {
+                _chatLogService.Post(model.Message);
+            }
+
+            //Post-Redirect-Get
+            return RedirectToAction(nameof(Index));
         }
 
     }
