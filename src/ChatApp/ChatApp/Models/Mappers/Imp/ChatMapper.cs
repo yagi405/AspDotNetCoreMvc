@@ -7,15 +7,20 @@ namespace ChatApp.Models.Mappers.Imp
 {
     public class ChatMapper : IChatMapper
     {
-        public IList<ChatLogViewModel> FromChatLogToViewModel(IList<ChatLog> chatLogs)
+        public ChatIndexViewModel FromChatLogToViewModel(IList<ChatLog> chatLogs)
         {
-            return chatLogs
-                .Select(x => new ChatLogViewModel()
+            var details = chatLogs
+                .Select(x => new ChatIndexViewModel.Detail()
                 {
                     PostAt = x.PostAt,
                     Message = x.Message,
                 })
                 .ToList();
+
+            return new ChatIndexViewModel()
+            {
+                Details = details
+            };
         }
     }
 }

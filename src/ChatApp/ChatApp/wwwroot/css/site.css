@@ -98,3 +98,49 @@ body {
                 border: 10px solid transparent;
                 border-left: 18px solid gray;
             }
+
+textarea {
+    height: auto;
+    resize: vertical;
+}
+
+.form-inline {
+    margin: 10px 0;
+    display: flex;
+}
+
+.btn, .input-message {
+    outline: none;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+}
+
+.input-message {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+}
+
+    .input-message:focus {
+        box-shadow: 0 .25rem .75rem #000000;
+        box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+        border: solid 2px gray;
+    }
+
+.btn {
+    color: white;
+    background-color: darkorange;
+    border-color: darkorange;
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.375rem 0.75rem;
+}
+
+    .btn:focus, .btn:hover {
+        color: white;
+        background-color: gold;
+        border-color: gold;
+    }

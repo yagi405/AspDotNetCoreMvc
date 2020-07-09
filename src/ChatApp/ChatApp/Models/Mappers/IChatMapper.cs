@@ -6,6 +6,6 @@ namespace ChatApp.Models.Mappers
 {
     public interface IChatMapper
     {
-        IList<ChatLogViewModel> FromChatLogToViewModel(IList<ChatLog> chatLogs);
+        ChatIndexViewModel FromChatLogToViewModel(IList<ChatLog> chatLogs);
     }
 }
