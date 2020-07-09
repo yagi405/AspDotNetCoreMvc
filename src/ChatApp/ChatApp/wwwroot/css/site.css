@@ -80,37 +80,70 @@ label {
     margin-bottom: 0.5rem;
 }
 
+.chat-log {
+    margin-top: 20px;
+    float: left;
+}
+
 .chat-logs > div:after {
     content: "";
     display: block;
     clear: both;
 }
 
-.chat-log {
-    margin-top: 20px;
+.chat-log .icon {
+    padding: 0.25rem;
+    border: 1px solid #dee2e6;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    margin-right: 10px;
+}
+
+.chat-log .message {
+    vertical-align: top;
+    display: inline-block;
+    padding: 10px;
+    background: wheat;
+    border-radius: 30px 30px 30px 30px;
+    position: relative;
+}
+
+    .chat-log .message p {
+        display: inline-block;
+    }
+
+        .chat-log .message p:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -19px;
+            border: 8px solid transparent;
+            border-right: 18px solid wheat;
+        }
+
+
+.own .chat-log {
     float: right;
 }
 
-    .chat-log .message {
-        padding: 10px;
-        background: gray;
-        border-radius: 30px 30px 30px 30px;
-        color: white;
-        position: relative;
+    .own .chat-log .icon {
+        float: right;
+        margin-right: 0;
+        margin-left: 12px;
     }
 
-        .chat-log .message p {
-            display: inline-block;
-        }
+    .own .chat-log .message {
+        background: gray;
+        color: white;
+    }
 
-            .chat-log .message p:after {
-                content: "";
-                position: absolute;
-                top: 50%;
-                right: -19px;
-                border: 10px solid transparent;
-                border-left: 18px solid gray;
-            }
+        .own .chat-log .message p:after {
+            right: -19px;
+            left: auto;
+            border: 8px solid transparent;
+            border-left: 18px solid gray;
+        }
 
 textarea {
     height: auto;

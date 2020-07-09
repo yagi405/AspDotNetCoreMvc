@@ -21,6 +21,7 @@ namespace ChatApp.Models.Entities.ViewEntities
             public DateTime PostAt { get; set; }
             public string Message { get; set; }
             public string Name { get; set; }
+            public string IconUrl { get; set; }
         }
     }
 }

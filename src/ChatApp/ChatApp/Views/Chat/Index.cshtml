@@ -14,14 +14,15 @@
 <div class="chat-logs">
     @foreach (var chatLog in Model.Details)
     {
-        <div>
-            <div class="chat-log">
-                <span class="small">@chatLog.PostAt</span>
-                <span class="small">@chatLog.Name</span>
-                <div class="message">
-                    <p>@chatLog.Message</p>
-                </div>
+    <div class="own">
+        <div class="chat-log">
+            <span class="small">@chatLog.PostAt</span>
+            <span class="small">@chatLog.Name</span>
+            <img class="icon" src="@Url.Content(chatLog.IconUrl)" alt="@chatLog.Name" />
+            <div class="message">
+                <p>@chatLog.Message</p>
             </div>
         </div>
+    </div>
     }
 </div>
