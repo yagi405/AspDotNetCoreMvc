@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
 using ChatApp.Models.Managers;
 using ChatApp.Models.Managers.Imp;
 using ChatApp.Models.Mappers;
@@ -38,7 +34,7 @@ namespace ChatApp
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = new PathString("/Account/Login");
+                    options.LoginPath = new PathString("/Login");
                     options.SlidingExpiration = true;
                 });
 
@@ -46,11 +42,11 @@ namespace ChatApp
                 .AddScoped<IDbConnection>(
                     _ => new SqlConnection(Configuration.GetConnectionString("DefaultConnection"))
                 )
+                .AddScoped<IAuthService, AuthService>()
+                .AddScoped<IUserService, UserService>()
                 .AddScoped<IChatLogService, ChatLogService>()
                 .AddScoped<IChatMapper, ChatMapper>()
-                .AddScoped<IAuthenticationService, AuthenticationService>()
-                .AddScoped<IPasswordManager, PasswordManager>()
-                .AddScoped<IUserService, UserService>();
+                .AddScoped<IPasswordManager, PasswordManager>();
 
         }
 
@@ -73,7 +69,7 @@ namespace ChatApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Login}/{id?}"
+                    pattern: "{controller=Login}/{action=Index}/{id?}"
                 );
             });
         }

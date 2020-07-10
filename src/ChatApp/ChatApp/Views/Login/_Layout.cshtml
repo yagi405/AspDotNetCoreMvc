@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <label class="brand">ChatApp</label>
+    </header>
+    <div class="wrapper">
+        <main role="main">
+            @if (ViewBag.Message != null)
+            {
+                <div class="notification">
+                    @ViewBag.Message
+                </div>
+            }
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="footer wrapper">
+        BC2020
+    </footer>
+    <script type="text/javascript" src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

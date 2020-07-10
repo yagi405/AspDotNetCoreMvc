@@ -2,7 +2,7 @@
 
 namespace ChatApp.Models.Entities.ViewEntities
 {
-    public class AccountLoginViewModel
+    public class LoginIndexViewModel
     {
         [DisplayName("ID")]
         public string UserId { get; set; }

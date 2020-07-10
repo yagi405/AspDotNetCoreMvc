@@ -13,10 +13,13 @@ html {
     min-height: 100%;
 }
 
-a.brand {
+.brand {
     font-size: 20px;
-    text-decoration: none;
     color: white;
+}
+
+a.brand {
+    text-decoration: none;
 }
 
 nav > ul {
@@ -174,6 +177,22 @@ textarea {
         box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
         border: solid 2px gray;
     }
+
+.notification, .notification-warning {
+    padding: 0.75rem 1.25rem;
+    margin: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.5rem;
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.notification-warning {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
 
 .text-danger {
     color: #dc3545;

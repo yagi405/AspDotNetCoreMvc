@@ -2,12 +2,14 @@
 using System.Data;
 using ChatApp.Models.Entities;
 using ChatApp.Models.Entities.DbEntities;
+using ChatApp.Models.Extensions;
 
 namespace ChatApp.Models.Services.Imp
 {
     public class UserService : AbstractDbService, IUserService
     {
-        public UserService(IDbConnection dbConnection) : base(dbConnection) { }
+        public UserService(IDbConnection dbConnection)
+            : base(dbConnection) { }
 
         public User GetById(string userId)
         {
@@ -83,6 +85,27 @@ order by
                 );
             }
             return users;
+        }
+
+        public bool ChangePassword(User user, string salt, string hashedPassword)
+        {
+            const string cmdText = @"
+Update 
+	Users
+set
+	PasswordType = @passwordType,
+	PasswordSalt = @passwordSalt,
+	Password = @password
+where
+	UserId = @userId 
+";
+            using var cmd = Connection.CreateCommand();
+            cmd.CommandText = cmdText;
+            cmd.AddParameter("@passwordType", PasswordType.Hashed);
+            cmd.AddParameter("@passwordSalt", salt);
+            cmd.AddParameter("@password", hashedPassword);
+            cmd.AddParameter("@userId", user.UserId);
+            return cmd.ExecuteNonQuery() == 1;
         }
     }
 }

@@ -8,5 +8,7 @@ namespace ChatApp.Models.Services
         User GetById(string userId);
 
         IList<User> GetAll();
+
+        bool ChangePassword(User user, string salt, string hashedPassword);
     }
 }
