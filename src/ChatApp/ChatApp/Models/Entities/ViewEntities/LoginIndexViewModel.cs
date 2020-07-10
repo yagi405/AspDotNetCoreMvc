@@ -5,12 +5,12 @@ namespace ChatApp.Models.Entities.ViewEntities
 {
     public class LoginIndexViewModel
     {
-        [DisplayName("ID")]
-        [Required]
+        [DisplayName("ユーザーID")]
+        [Required(ErrorMessage = nameof(RequiredAttribute))]
         public string UserId { get; set; }
 
-        [DisplayName("Password")]
-        [Required]
+        [DisplayName("パスワード")]
+        [Required(ErrorMessage = nameof(RequiredAttribute))]
         public string Password { get; set; }
     }
 }
