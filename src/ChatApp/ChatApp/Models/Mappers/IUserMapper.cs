@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ChatApp.Models.Entities.DbEntities;
 using ChatApp.Models.Entities.ViewEntities;
 
