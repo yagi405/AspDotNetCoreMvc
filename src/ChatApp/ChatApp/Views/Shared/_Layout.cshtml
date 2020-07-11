@@ -12,8 +12,11 @@
         <a class="brand" asp-controller="Chat" asp-action="Index">ChatApp</a>
         <nav>
             <ul>
-                <li><a asp-controller="Chat" asp-action="Index">ChatApp</a></li>
-                <li><a asp-controller="Chat" asp-action="Index">TBA</a></li>
+                <li><a asp-controller="Chat" asp-action="Index">チャット</a></li>
+                @if (User.IsInRole(RoleConst.Admin))
+                {
+                    <li><a asp-controller="User" asp-action="Index">ユーザー管理</a></li>
+                }
             </ul>
         </nav>
     </header>

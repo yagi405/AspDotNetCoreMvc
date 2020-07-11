@@ -6,6 +6,7 @@ using System.Text;
 using ChatApp.Models.Entities;
 using ChatApp.Models.Entities.DbEntities;
 using ChatApp.Models.Managers;
+using ChatApp.Models.Util;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ChatApp.Models.Services.Imp
@@ -57,6 +58,11 @@ namespace ChatApp.Models.Services.Imp
 
             var identity = new ClaimsIdentity(claims,
                 CookieAuthenticationDefaults.AuthenticationScheme);
+
+            if (user.IsAdministrator)
+            {
+                identity.AddClaim(new Claim(ClaimTypes.Role, RoleConst.Admin));
+            }
 
             return identity;
         }
