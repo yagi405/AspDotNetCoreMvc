@@ -54,6 +54,7 @@ namespace ChatApp
                 .AddScoped<IUserService, UserService>()
                 .AddScoped<IChatLogService, ChatLogService>()
                 .AddScoped<IChatMapper, ChatMapper>()
+                .AddScoped<IUserMapper, UserMapper>()
                 .AddScoped<IPasswordManager, PasswordManager>();
 
         }

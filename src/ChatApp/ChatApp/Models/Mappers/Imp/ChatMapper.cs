@@ -43,7 +43,7 @@ namespace ChatApp.Models.Mappers.Imp
                 {
                     PostAt = x.PostAt,
                     Message = x.Message,
-                    Name = users.SingleOrDefault(u => u.UserId == x.UserId)?.Name,
+                    Name = users.SingleOrDefault(u => u.UserId == x.UserId)?.UserName,
                     IconUrl = _defaultIcons[
                         Math.Abs(
                             x.UserId?.ToUpperInvariant().Select(c => (int)c).Sum() ?? 0

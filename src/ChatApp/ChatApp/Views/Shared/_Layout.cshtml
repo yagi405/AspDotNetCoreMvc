@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using ChatApp.Models.Util
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -18,6 +19,24 @@
     </header>
     <div class="wrapper">
         <main role="main">
+            @{
+                var messages = new[]
+                {
+                    (CssClass: "notification", Key: AppConst.TempDataKeyMessage),
+                    (CssClass: "notification-warning", Key: AppConst.TempDataKeyWarning),
+                };
+
+                foreach (var (cssClass, key) in messages)
+                {
+                    var message = TempData[key]?.ToString();
+                    if (!string.IsNullOrEmpty(message))
+                    {
+                        <div class="@cssClass">
+                            @message
+                        </div>
+                    }
+                }
+            }
             @RenderBody()
         </main>
     </div>

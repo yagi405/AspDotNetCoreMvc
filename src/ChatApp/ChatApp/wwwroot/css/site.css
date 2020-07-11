@@ -2,9 +2,39 @@
     font-size: 14px;
 }
 
+.wrapper {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 576px) {
+    .wrapper {
+        max-width: 540px;
+    }
+}
+
 @media (min-width: 768px) {
     html {
         font-size: 16px;
+    }
+
+    .wrapper {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .wrapper {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .wrapper {
+        max-width: 1140px;
     }
 }
 
@@ -50,10 +80,6 @@ body {
     background-color: #f0f0f0;
 }
 
-.wrapper {
-    padding-right: 15px;
-    padding-left: 15px;
-}
 
 .footer {
     position: absolute;
@@ -82,6 +108,20 @@ label {
     display: inline-block;
     margin-bottom: 0.5rem;
 }
+
+dt {
+    font-weight: bold;
+    float: left;
+}
+
+dd {
+    margin-bottom: .5rem;
+    margin-left: 95px;
+}
+
+    dd:before {
+        content: "：";
+    }
 
 .chat-log {
     margin-top: 20px;
@@ -207,7 +247,6 @@ textarea.input-text {
     width: 100%;
 }
 
-
 .btn {
     color: white;
     background-color: darkorange;
@@ -222,4 +261,32 @@ textarea.input-text {
         color: white;
         background-color: gold;
         border-color: gold;
+    }
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.table {
+    border-collapse: collapse;
+}
+
+.table {
+    width: 100%;
+}
+
+    .table th,
+    .table td {
+        padding: 0.5rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
     }

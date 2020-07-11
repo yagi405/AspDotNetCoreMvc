@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ChatApp.Models.Entities.ViewEntities
+{
+    public class UserCreateViewModel
+    {
+        [DisplayName("ユーザーID")]
+        [Required(ErrorMessage = nameof(RequiredAttribute))]
+        public string UserId { get; set; }
+
+        [DisplayName("ユーザー名")]
+        [Required(ErrorMessage = nameof(RequiredAttribute))]
+        public string Name { get; set; }
+
+        [DisplayName("管理者")]
+        public bool IsAdministrator { get; set; }
+    }
+}

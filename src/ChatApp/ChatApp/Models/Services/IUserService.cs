@@ -10,5 +10,11 @@ namespace ChatApp.Models.Services
         IList<User> GetAll();
 
         bool ChangePassword(User user, string salt, string hashedPassword);
+
+        User Create(User user);
+
+        bool Edit(string userId, string userName, bool isAdministrator);
+
+        bool Delete(string userId);
     }
 }

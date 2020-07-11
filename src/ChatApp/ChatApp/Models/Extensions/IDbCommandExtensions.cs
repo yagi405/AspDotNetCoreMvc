@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 
 namespace ChatApp.Models.Extensions
 {
@@ -8,7 +9,14 @@ namespace ChatApp.Models.Extensions
         {
             var param = self.CreateParameter();
             param.ParameterName = parameterName;
-            param.Value = value;
+            if (value == null)
+            {
+                param.Value = DBNull.Value;
+            }
+            else
+            {
+                param.Value = value;
+            }
             self.Parameters.Add(param);
         }
     }

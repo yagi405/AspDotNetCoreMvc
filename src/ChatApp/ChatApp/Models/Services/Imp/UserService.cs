@@ -107,5 +107,66 @@ where
             cmd.AddParameter("@userId", user.UserId);
             return cmd.ExecuteNonQuery() == 1;
         }
+
+        public User Create(User user)
+        {
+            const string cmdText = @"
+insert into
+	Users(
+		UserId,
+		UserName,
+		PasswordType,
+		PasswordSalt,
+		Password,
+		IsAdministrator
+	)
+values(@userId,@userName,@passwordType,@passwordSalt,@password,@isAdministrator)
+";
+
+            using var cmd = Connection.CreateCommand();
+            cmd.CommandText = cmdText;
+            cmd.AddParameter("@userId", user.UserId);
+            cmd.AddParameter("@userName", user.UserName);
+            cmd.AddParameter("@passwordType", user.PasswordType);
+            cmd.AddParameter("@passwordSalt", user.PasswordSalt);
+            cmd.AddParameter("@password", user.Password);
+            cmd.AddParameter("@isAdministrator", user.IsAdministrator);
+            cmd.ExecuteNonQuery();
+
+            return user;
+        }
+
+        public bool Edit(string userId, string userName, bool isAdministrator)
+        {
+            const string cmdText = @"
+update 
+	Users
+set
+	UserName = @userName,
+	IsAdministrator = @isAdministrator
+where
+	UserId = @userId 
+";
+            using var cmd = Connection.CreateCommand();
+            cmd.CommandText = cmdText;
+            cmd.AddParameter("@userId", userId);
+            cmd.AddParameter("@userName", userName);
+            cmd.AddParameter("@isAdministrator", isAdministrator);
+            return cmd.ExecuteNonQuery() == 1;
+        }
+
+        public bool Delete(string userId)
+        {
+            const string cmdText = @"
+delete from
+	Users
+where
+	UserId = @userId
+";
+            using var cmd = Connection.CreateCommand();
+            cmd.CommandText = cmdText;
+            cmd.AddParameter("@userId", userId);
+            return cmd.ExecuteNonQuery() == 1;
+        }
     }
 }

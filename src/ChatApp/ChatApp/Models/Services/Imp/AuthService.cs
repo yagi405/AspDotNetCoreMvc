@@ -52,7 +52,7 @@ namespace ChatApp.Models.Services.Imp
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.UserId),
-                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Name, user.UserName),
             };
 
             var identity = new ClaimsIdentity(claims,

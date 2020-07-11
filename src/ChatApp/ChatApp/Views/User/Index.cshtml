@@ -1,0 +1,47 @@
+﻿@model UserIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>ユーザー一覧</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ユーザーID
+            </th>
+            <th>
+                ユーザー名
+            </th>
+            <th>
+                管理者
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Details)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.IsAdministrator)
+                </td>
+                <td class="text-center">
+                    @Html.ActionLink("Edit", "Edit", new { userId = item.UserId }) |
+                    @Html.ActionLink("Delete", "Delete", new { userId = item.UserId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

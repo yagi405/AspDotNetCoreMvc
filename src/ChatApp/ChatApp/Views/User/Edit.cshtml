@@ -1,0 +1,36 @@
+﻿@model UserEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<hr />
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="UserId"></label>
+        @Html.DisplayNameFor(model => model.UserId)
+        <input asp-for="UserId" type="hidden" />
+        <span asp-validation-for="UserId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="input-text" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>
+            <input asp-for="IsAdministrator" /> @Html.DisplayNameFor(model => model.IsAdministrator)
+        </label>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
