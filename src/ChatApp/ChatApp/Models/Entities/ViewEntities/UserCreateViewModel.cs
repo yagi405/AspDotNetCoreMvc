@@ -9,7 +9,7 @@ namespace ChatApp.Models.Entities.ViewEntities
         [Required(ErrorMessage = nameof(RequiredAttribute))]
         public string UserId { get; set; }
 
-        [DisplayName("ユーザー名")]
+        [DisplayName("名前")]
         [Required(ErrorMessage = nameof(RequiredAttribute))]
         public string Name { get; set; }
 

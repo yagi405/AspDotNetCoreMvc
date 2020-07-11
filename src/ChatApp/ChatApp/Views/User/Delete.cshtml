@@ -7,38 +7,38 @@
 <h1>ユーザー削除</h1>
 <hr />
 
-@*<h3>Are you sure you want to delete this?</h3>*@
 <h3>本当にこのユーザーを削除してよろしいですか？</h3>
+<form asp-action="Delete">
+    <div class="form-group">
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.UserId)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UserId)
+                <input asp-for="UserId" type="hidden" />
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+                <input asp-for="Name" type="hidden" />
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.IsAdministrator)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IsAdministrator)
+                <input asp-for="IsAdministrator" type="hidden" />
+            </dd>
+        </dl>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="削除" class="btn" />
+    </div>
+</form>
+
 <div>
-    <form asp-action="Delete">
-        <div class="form-group">
-            <dl>
-                <dt>
-                    @Html.DisplayNameFor(model => model.UserId)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.UserId)
-                    <input asp-for="UserId" type="hidden" />
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Name)
-                    <input asp-for="Name" type="hidden" />
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.IsAdministrator)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.IsAdministrator)
-                    <input asp-for="IsAdministrator" type="hidden" />
-                </dd>
-            </dl>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="削除" class="btn" /> |
-            <a asp-action="Index">一覧に戻る</a>
-        </div>
-    </form>
+    <a asp-action="Index">一覧に戻る</a>
 </div>

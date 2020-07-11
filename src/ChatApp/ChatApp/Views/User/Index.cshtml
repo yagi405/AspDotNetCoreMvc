@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>ユーザー一覧</h1>
+<h1>ユーザー</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">新規作成</a>
 </p>
 <table class="table">
     <thead>
@@ -38,8 +38,8 @@
                     @Html.DisplayFor(modelItem => item.IsAdministrator)
                 </td>
                 <td class="text-center">
-                    @Html.ActionLink("Edit", "Edit", new { userId = item.UserId }) |
-                    @Html.ActionLink("Delete", "Delete", new { userId = item.UserId })
+                    <a asp-action="Edit" asp-route-userId="@item.UserId">編集</a> |
+                    <a asp-action="Delete" asp-route-userId="@item.UserId">削除</a>
                 </td>
             </tr>
         }
