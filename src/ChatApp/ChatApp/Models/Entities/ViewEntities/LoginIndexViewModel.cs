@@ -11,6 +11,7 @@ namespace ChatApp.Models.Entities.ViewEntities
 
         [DisplayName("パスワード")]
         [Required(ErrorMessage = nameof(RequiredAttribute))]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }
