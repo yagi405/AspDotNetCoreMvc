@@ -2,6 +2,27 @@
     font-size: 14px;
 }
 
+@font-face {
+    font-family: 'Noto Sans Japanese';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../font/NotoSansJP-Regular.woff") format("woff"), url("../font/NotoSansJP-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'Noto Sans Japanese';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("../font/NotoSansJP-Bold.woff") format("woff"), url("../font/NotoSansJP-Bold.ttf") format("truetype");
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-weight: bold;
+}
+
+
 .wrapper {
     width: 100%;
     padding-right: 15px;
@@ -43,6 +64,12 @@ html {
     min-height: 100%;
 }
 
+body {
+    margin-bottom: 80px;
+    background-color: #f0f0f0;
+    font-family: 'Noto Sans Japanese', YuGothic, YuGothicM, "メイリオ", sans-serif;
+}
+
 .brand {
     font-size: 20px;
     color: white;
@@ -74,12 +101,6 @@ header {
     display: flex;
     align-items: center;
 }
-
-body {
-    margin-bottom: 80px;
-    background-color: #f0f0f0;
-}
-
 
 .footer {
     position: absolute;
