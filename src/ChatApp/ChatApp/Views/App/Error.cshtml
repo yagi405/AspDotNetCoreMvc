@@ -1,0 +1,22 @@
+﻿@model AppErrorViewModel
+
+@{
+    ViewData["Title"] = "システムエラー";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h1 class="text-danger">Error @Model.StatusCode</h1>
+    <h4>システムエラーが発生しました。</h4>
+    <p>
+        このページは次のような場合に表示されることがあります。
+    </p>
+    <ul>
+        <li>長時間操作が行われていない</li>
+        <li>システムに問題が生じた</li>
+    </ul>
+    <p>
+        原因が不明な場合は、管理者にお問い合わせください。
+    </p>
+</div>

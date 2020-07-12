@@ -94,6 +94,7 @@ nav {
 
     nav > ul {
         display: flex;
+        margin: 0;
     }
 
         nav > ul:first-child {
@@ -166,6 +167,14 @@ hr {
 label {
     display: inline-block;
     margin-bottom: 0.5rem;
+}
+
+p, ul {
+    margin-bottom: 1rem;
+}
+
+ul {
+    padding-left: 40px;
 }
 
 dt {

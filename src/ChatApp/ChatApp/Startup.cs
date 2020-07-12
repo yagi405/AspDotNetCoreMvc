@@ -47,6 +47,7 @@ namespace ChatApp
                 .AddCookie(options =>
                 {
                     options.LoginPath = new PathString("/Login");
+                    options.AccessDeniedPath = new PathString("/App/AccessDenied");
                     options.SlidingExpiration = true;
                 });
 
@@ -60,7 +61,6 @@ namespace ChatApp
                 .AddScoped<IChatMapper, ChatMapper>()
                 .AddScoped<IUserMapper, UserMapper>()
                 .AddScoped<IPasswordManager, PasswordManager>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +70,12 @@ namespace ChatApp
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("App/Error");
+            }
+
+            app.UseStatusCodePagesWithReExecute("/App/Error/{0}");
 
             var supportedCulture = new[] { JaJpCulture };
             var localizationOptions = new RequestLocalizationOptions()
