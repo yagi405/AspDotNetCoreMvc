@@ -3,10 +3,12 @@ using ChatApp.Models.Entities.ViewEntities;
 using ChatApp.Models.Extensions;
 using ChatApp.Models.Services;
 using ChatApp.Models.Util;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatApp.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
