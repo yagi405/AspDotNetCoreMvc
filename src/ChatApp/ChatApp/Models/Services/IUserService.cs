@@ -11,6 +11,8 @@ namespace ChatApp.Models.Services
 
         bool ChangePassword(User user, string salt, string hashedPassword);
 
+        bool ChangeUserName(User user, string userName);
+
         User Create(User user);
 
         bool Edit(string userId, string userName, bool isAdministrator);

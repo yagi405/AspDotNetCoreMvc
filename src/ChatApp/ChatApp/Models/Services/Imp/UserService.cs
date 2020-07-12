@@ -108,6 +108,23 @@ where
             return cmd.ExecuteNonQuery() == 1;
         }
 
+        public bool ChangeUserName(User user, string userName)
+        {
+            const string cmdText = @"
+update 
+	Users
+set
+	UserName = @userName
+where
+	UserId = @userId 
+";
+            using var cmd = Connection.CreateCommand();
+            cmd.CommandText = cmdText;
+            cmd.AddParameter("@userId", user.UserId);
+            cmd.AddParameter("@userName", userName);
+            return cmd.ExecuteNonQuery() == 1;
+        }
+
         public User Create(User user)
         {
             const string cmdText = @"

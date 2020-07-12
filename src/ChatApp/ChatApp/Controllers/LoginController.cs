@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ChatApp.Models.Entities;
 using ChatApp.Models.Entities.ViewEntities;
@@ -75,38 +76,44 @@ namespace ChatApp.Controllers
         [HttpPost]
         public IActionResult ChangePassword(LoginChangePasswordViewModel model)
         {
-            if (!ModelState.IsValid)
+            try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                var user = _userService.GetById(model.UserId);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                if (_authService.Authenticate(model.UserId, model.CurrentPassword, out _) == null)
+                {
+                    ModelState.AddModelError(
+                        nameof(LoginChangePasswordViewModel.CurrentPassword)
+                        , "現在のパスワードが違います。");
+                    return RedirectToAction(nameof(ChangePassword));
+                }
+
+                var (salt, hashedPassword) = _authService.GenerateSaltAndHashedPassword(model.NewPassword);
+                if (!_userService.ChangePassword(user, salt, hashedPassword))
+                {
+                    ModelState.AddModelError("", "パスワードの変更に失敗しました。");
+                    return RedirectToAction(nameof(ChangePassword));
+                }
+
+                TempData[AppConst.TempDataKeyMessage] = "パスワードを変更しました。再度ログインしてください。";
+                TempData[AppConst.TempDataKeyUserId] = user.UserId;
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.ToString());
                 return View(model);
             }
-
-            var user = _userService.GetById(model.UserId);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            if (_authService.Authenticate(model.UserId, model.CurrentPassword, out _) == null)
-            {
-                ModelState.AddModelError(
-                    nameof(LoginChangePasswordViewModel.CurrentPassword)
-                    , "現在のパスワードが違います。");
-                return View(model);
-            }
-
-            var (salt, hashedPassword) = _authService.GenerateSaltAndHashedPassword(model.NewPassword);
-            if (!_userService.ChangePassword(user, salt, hashedPassword))
-            {
-                ModelState.AddModelError(
-                    nameof(LoginChangePasswordViewModel.CurrentPassword)
-                    , "パスワードの変更に失敗しました。");
-                return View(model);
-            }
-
-            TempData[AppConst.TempDataKeyMessage] = "パスワードを変更しました。再度ログインしてください。";
-            TempData[AppConst.TempDataKeyUserId] = user.UserId;
-
-            return RedirectToAction(nameof(Index));
         }
     }
 }
