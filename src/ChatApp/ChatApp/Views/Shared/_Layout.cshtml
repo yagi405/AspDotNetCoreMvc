@@ -9,16 +9,18 @@
 </head>
 <body>
     <header>
-        <a class="brand" asp-controller="Chat" asp-action="Index">ChatApp</a>
-        <nav>
-            <ul>
-                <li><a asp-controller="Chat" asp-action="Index">チャット</a></li>
-                @if (User.IsInRole(RoleConst.Admin))
-                {
-                    <li><a asp-controller="User" asp-action="Index">ユーザー管理</a></li>
-                }
-            </ul>
-        </nav>
+        <div class="wrapper">
+            <a class="brand" asp-controller="Chat" asp-action="Index">ChatApp</a>
+            <nav>
+                <ul>
+                    <li><a asp-controller="Chat" asp-action="Index">チャット</a></li>
+                    @if (User.IsInRole(RoleConst.Admin))
+                    {
+                        <li><a asp-controller="User" asp-action="Index">ユーザー管理</a></li>
+                    }
+                </ul>
+            </nav>
+        </div>
     </header>
     <div class="wrapper">
         <main role="main">
@@ -43,8 +45,10 @@
             @RenderBody()
         </main>
     </div>
-    <footer class="footer wrapper">
-        BC2020
+    <footer class="footer">
+        <div class="wrapper">
+            BC2020
+        </div>
     </footer>
     <script type="text/javascript" src="~/lib/jquery/jquery.js"></script>
     <script type="text/javascript" src="~/lib/jquery-validate/jquery.validate.js"></script>
