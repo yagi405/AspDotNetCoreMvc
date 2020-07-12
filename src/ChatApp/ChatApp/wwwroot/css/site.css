@@ -1,5 +1,6 @@
-﻿html {
-    font-size: 14px;
+﻿* {
+    margin: 0;
+    padding: 0;
 }
 
 @font-face {
@@ -60,6 +61,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 html {
     position: relative;
     min-height: 100%;
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
@@ -72,6 +80,7 @@ body {
 .brand {
     font-size: 20px;
     color: white;
+    margin-right: 20px;
 }
 
 a.brand {
@@ -108,6 +117,8 @@ header {
     width: 100%;
     background-color: gray;
     color: white;
+    max-height: 76px;
+    overflow: hidden;
 }
 
     header .wrapper {
@@ -125,7 +136,7 @@ header, .chat-input-area {
 }
 
 .chat-input-area {
-    top: 57px;
+    top: 39px;
     z-index: 1031;
 }
 
@@ -172,7 +183,7 @@ dd {
     }
 
 .chat-logs {
-    padding-top: 60px;
+    padding-top: 50px;
 }
 
 .chat-log {
