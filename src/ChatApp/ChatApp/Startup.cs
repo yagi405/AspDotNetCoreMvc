@@ -1,5 +1,6 @@
 using System.Data;
 using System.Data.SqlClient;
+using ChatApp.Models.Attributes;
 using ChatApp.Models.Managers;
 using ChatApp.Models.Managers.Imp;
 using ChatApp.Models.Mappers;
@@ -36,6 +37,7 @@ namespace ChatApp
             services.AddControllersWithViews(options =>
                 {
                     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                    options.Filters.Add(new LoggingAttribute());
                 })
                 .AddDataAnnotationsLocalization(options =>
                 {
