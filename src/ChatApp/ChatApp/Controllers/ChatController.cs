@@ -1,4 +1,5 @@
 ﻿using System;
+using ChatApp.Models.Attributes;
 using ChatApp.Models.Entities.ViewEntities;
 using ChatApp.Models.Extensions;
 using ChatApp.Models.Mappers;
@@ -65,6 +66,7 @@ namespace ChatApp.Controllers
         }
 
         [HttpPost]
+        [AjaxOnly]
         public IActionResult Refresh()
         {
             var details = GetIndexViewModel()?.Details;

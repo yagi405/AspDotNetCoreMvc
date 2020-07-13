@@ -1,4 +1,4 @@
-﻿namespace ChatApp.Resources
+﻿namespace ChatApp
 {
     public class SharedResource
     {

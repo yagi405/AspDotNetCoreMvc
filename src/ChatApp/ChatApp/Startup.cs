@@ -7,7 +7,6 @@ using ChatApp.Models.Mappers;
 using ChatApp.Models.Mappers.Imp;
 using ChatApp.Models.Services;
 using ChatApp.Models.Services.Imp;
-using ChatApp.Resources;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,11 +38,11 @@ namespace ChatApp
                     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     options.Filters.Add(new LoggingAttribute());
                 })
-                .AddDataAnnotationsLocalization(options =>
-                {
-                    options.DataAnnotationLocalizerProvider = (type, factory) =>
-                        factory.Create(typeof(SharedResource));
-                });
+            .AddDataAnnotationsLocalization(options =>
+            {
+                options.DataAnnotationLocalizerProvider = (type, factory) =>
+                    factory.Create(typeof(SharedResource));
+            });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -74,7 +73,7 @@ namespace ChatApp
             }
             else
             {
-                app.UseExceptionHandler("App/Error");
+                app.UseExceptionHandler("/App/Error");
             }
 
             app.UseStatusCodePagesWithReExecute("/App/Error/{0}");
