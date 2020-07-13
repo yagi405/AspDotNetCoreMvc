@@ -112,7 +112,13 @@ nav {
             nav > ul > li > a {
                 text-decoration: none;
                 color: white;
+                color: rgba(255,255,255,.5);
             }
+
+                nav > ul > li > a:hover, nav > ul > li > a:focus {
+                    color: white;
+                    color: rgba(255,255,255,.75);
+                }
 
 header {
     width: 100%;
@@ -150,6 +156,7 @@ header, .chat-input-area {
     line-height: 60px;
     background: #343a40;
     color: white;
+    color: rgba(255,255,255,.5);
 }
 
 .form-group {
@@ -222,6 +229,7 @@ dd {
     background: wheat;
     border-radius: 30px 30px 30px 30px;
     position: relative;
+    min-width: 90px;
 }
 
     .chat-log .message p {
