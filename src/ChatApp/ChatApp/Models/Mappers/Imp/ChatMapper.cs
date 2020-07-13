@@ -4,6 +4,7 @@ using System.Linq;
 using ChatApp.Models.Entities.DbEntities;
 using ChatApp.Models.Entities.ViewEntities;
 using ChatApp.Models.Services;
+using ChatApp.Models.Util;
 
 namespace ChatApp.Models.Mappers.Imp
 {
@@ -36,6 +37,8 @@ namespace ChatApp.Models.Mappers.Imp
 
         public ChatIndexViewModel FromChatLogToViewModel(IList<ChatLog> chatLogs, string userId)
         {
+            Args.NotNull(chatLogs, nameof(chatLogs));
+
             var users = _userService.GetAll();
 
             var details = chatLogs

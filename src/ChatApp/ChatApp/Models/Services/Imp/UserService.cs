@@ -3,6 +3,7 @@ using System.Data;
 using ChatApp.Models.Entities;
 using ChatApp.Models.Entities.DbEntities;
 using ChatApp.Models.Extensions;
+using ChatApp.Models.Util;
 
 namespace ChatApp.Models.Services.Imp
 {
@@ -89,6 +90,8 @@ order by
 
         public bool ChangePassword(User user, string salt, string hashedPassword)
         {
+            Args.NotNull(user, nameof(user));
+
             const string cmdText = @"
 Update 
 	Users
@@ -110,6 +113,8 @@ where
 
         public bool ChangeUserName(User user, string userName)
         {
+            Args.NotNull(user, nameof(user));
+
             const string cmdText = @"
 update 
 	Users
@@ -127,6 +132,8 @@ where
 
         public User Create(User user)
         {
+            Args.NotNull(user, nameof(user));
+
             const string cmdText = @"
 insert into
 	Users(
@@ -155,6 +162,11 @@ values(@userId,@userName,@passwordType,@passwordSalt,@password,@isAdministrator)
 
         public bool Edit(string userId, string userName, bool isAdministrator)
         {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return false;
+            }
+
             const string cmdText = @"
 update 
 	Users
@@ -174,6 +186,11 @@ where
 
         public bool Delete(string userId)
         {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return false;
+            }
+
             const string cmdText = @"
 delete from
 	Users

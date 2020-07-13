@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using ChatApp.Models.Util;
 
 namespace ChatApp.Models.Services
 {
@@ -10,6 +11,7 @@ namespace ChatApp.Models.Services
 
         protected AbstractDbService(IDbConnection dbConnection)
         {
+            Args.NotNull(dbConnection,nameof(dbConnection));
             _dbConnection = dbConnection;
         }
 

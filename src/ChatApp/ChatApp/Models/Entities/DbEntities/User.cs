@@ -1,4 +1,6 @@
-﻿namespace ChatApp.Models.Entities.DbEntities
+﻿using ChatApp.Models.Util;
+
+namespace ChatApp.Models.Entities.DbEntities
 {
     public class User
     {
@@ -11,12 +13,10 @@
 
         public User(string userId, string userName, PasswordType passwordType, string passwordSalt, string password, bool isAdministrator)
         {
-            UserId = userId;
-            UserName = userName;
-            PasswordType = passwordType;
-            PasswordSalt = passwordSalt;
-            Password = password;
-            IsAdministrator = isAdministrator;
+            Args.NotEmpty(userId, nameof(userId));
+            Args.NotEmpty(userName, nameof(userName));
+            (UserId, UserName, PasswordType, PasswordSalt, Password, IsAdministrator) =
+                (userId, userName, passwordType, passwordSalt, password, isAdministrator);
         }
     }
 }
