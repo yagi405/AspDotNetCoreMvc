@@ -116,7 +116,7 @@ nav {
 
 header {
     width: 100%;
-    background-color: gray;
+    background-color: #343a40;
     color: white;
     max-height: 76px;
     overflow: hidden;
@@ -148,7 +148,7 @@ header, .chat-input-area {
     white-space: nowrap;
     height: 60px;
     line-height: 60px;
-    background: gray;
+    background: #343a40;
     color: white;
 }
 
@@ -249,7 +249,7 @@ dd {
     }
 
     .mine .chat-log .message {
-        background: gray;
+        background: #343a40;
         color: white;
     }
 
@@ -257,7 +257,7 @@ dd {
             right: -19px;
             left: auto;
             border: 8px solid transparent;
-            border-left: 18px solid gray;
+            border-left: 18px solid #343a40;
         }
 
 textarea {
@@ -287,7 +287,7 @@ textarea {
     .input-text:focus {
         box-shadow: 0 .25rem .75rem #000000;
         box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-        border: solid 2px gray;
+        border: solid 2px #343a40;
     }
 
 .notification, .notification-warning {
