@@ -24,7 +24,6 @@ namespace ChatApp.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.Message = TempData[AppConst.TempDataKeyMessage] as string;
             var userId = TempData[AppConst.TempDataKeyUserId] as string;
             return View(new LoginIndexViewModel()
             {
@@ -94,14 +93,14 @@ namespace ChatApp.Controllers
                     ModelState.AddModelError(
                         nameof(LoginChangePasswordViewModel.CurrentPassword)
                         , "現在のパスワードが違います。");
-                    return RedirectToAction(nameof(ChangePassword));
+                    return View(model);
                 }
 
                 var (salt, hashedPassword) = _authService.GenerateSaltAndHashedPassword(model.NewPassword);
                 if (!_userService.ChangePassword(user, salt, hashedPassword))
                 {
                     ModelState.AddModelError("", "パスワードの変更に失敗しました。");
-                    return RedirectToAction(nameof(ChangePassword));
+                    return View(model);
                 }
 
                 TempData[AppConst.TempDataKeyMessage] = "パスワードを変更しました。再度ログインしてください。";
