@@ -1,12 +1,28 @@
-﻿$("#btnPostChat").click(function () {
+﻿
+$(function () {
 
-    postForm("#frmPostChat",
-        function (data) {
-            const response = JSON.parse(data);
-            showSummaryErrors("#postChatLogErrors", response.extraData);
-            refreshChatLogs();
+    $("#btnPostChat").on("click",
+        function () {
+            postForm("#frmPostChat",
+                function (data) {
+                    const response = JSON.parse(data);
+                    showSummaryErrors("#postChatLogErrors", response.extraData);
+                    refreshChatLogs();
+                });
         });
 
+    $("#frmPostChat").on("keydown",
+        "#txtAreaChatLog",
+        function (e) {
+            if (e.key === "Enter" && !e.shiftKey) {
+                postForm("#frmPostChat",
+                    function (data) {
+                        const response = JSON.parse(data);
+                        showSummaryErrors("#postChatLogErrors", response.extraData);
+                        refreshChatLogs();
+                    });
+            }
+        });
 });
 
 function refreshChatLogs() {
