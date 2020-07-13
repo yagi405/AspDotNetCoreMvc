@@ -21,6 +21,7 @@ function refreshChatLogs() {
         .done(
             function (response) {
                 $("#chatLogs").html(response);
+                $("#txtAreaChatLog").val("");
             }
         );
 }
