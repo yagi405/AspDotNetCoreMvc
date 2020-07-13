@@ -1,6 +1,4 @@
-﻿@using ChatApp.Models.Util
-@using ChatApp.Models.Extensions
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 <head>
@@ -10,28 +8,7 @@
     <partial name="_FaviconsPartial" />
 </head>
 <body>
-    <header>
-        <div class="wrapper">
-            <a class="brand" asp-controller="Chat" asp-action="Index">ChatApp</a>
-            <nav>
-                <ul>
-                    <li><a asp-controller="Chat" asp-action="Index">チャット</a></li>
-                    @if (User.IsInRole(RoleConst.Admin))
-                    {
-                        <li><a asp-controller="User" asp-action="Index">ユーザー管理</a></li>
-                    }
-                </ul>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <ul>
-                        <li>
-                            <a asp-controller="Account" asp-action="Index">@User.UserId()</a>
-                        </li>
-                    </ul>
-                }
-            </nav>
-        </div>
-    </header>
+    <partial name="_HeaderPartial" />
     <div class="wrapper">
         <main role="main">
             @{
