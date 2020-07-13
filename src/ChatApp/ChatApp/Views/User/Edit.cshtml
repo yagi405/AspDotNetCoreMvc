@@ -10,10 +10,15 @@
 <form asp-action="Edit">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="UserId"></label>
-        @Html.DisplayNameFor(model => model.UserId)
-        <input asp-for="UserId" type="hidden" />
-        <span asp-validation-for="UserId" class="text-danger"></span>
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.UserId)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UserId)
+                <input asp-for="UserId" type="hidden" />
+            </dd>
+        </dl>
     </div>
     <div class="form-group">
         <label asp-for="Name"></label>
