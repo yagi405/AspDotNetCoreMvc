@@ -1,7 +1,9 @@
-﻿using ChatApp.Models.Entities.ViewEntities;
+﻿using System;
+using ChatApp.Models.Entities.ViewEntities;
 using ChatApp.Models.Extensions;
 using ChatApp.Models.Mappers;
 using ChatApp.Models.Services;
+using ChatApp.Models.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,10 +21,15 @@ namespace ChatApp.Controllers
             _chatMapper = chatMapper;
         }
 
-        private IActionResult GetIndexActionResult()
+        private ChatIndexViewModel GetIndexViewModel()
         {
             var chatLogs = _chatLogService.GetLatest();
-            return View(_chatMapper.FromChatLogToViewModel(chatLogs, User.UserId()));
+            return _chatMapper.FromChatLogToViewModel(chatLogs, User.UserId());
+        }
+
+        private IActionResult GetIndexActionResult()
+        {
+            return View(GetIndexViewModel());
         }
 
         [HttpGet]
@@ -36,17 +43,32 @@ namespace ChatApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                var response = new CommandResponse(false, "入力内容に不備があります。");
+                return Json(response);
             }
 
-            if (!string.IsNullOrEmpty(model.Message))
+            try
             {
-                _chatLogService.Post(model.Message, User.UserId());
+                var response = new CommandResponse();
+                if (!string.IsNullOrEmpty(model.Message))
+                {
+                    _chatLogService.Post(model.Message, User.UserId());
+                }
+                return Json(response);
             }
-
-            //Post-Redirect-Get
-            return RedirectToAction(nameof(Index));
+            catch (Exception ex)
+            {
+                var response = new CommandResponse(false);
+                response.AddExtra(ex.ToString());
+                return Json(response);
+            }
         }
 
+        [HttpPost]
+        public IActionResult Refresh()
+        {
+            var details = GetIndexViewModel()?.Details;
+            return PartialView("_ChatLogsPartial", details);
+        }
     }
 }

@@ -4,13 +4,17 @@
     ViewData["Title"] = "Index";
 }
 
-<form asp-action="Index" class="chat-input-area">
-    <div class="form-inline">
-        <textarea asp-for="Message" class="input-text" rows="3"></textarea>
-        <input class="btn" type="submit" value="投稿" />
+<form id="frmPostChat" asp-action="Index">
+    <div class="chat-input-area">
+        <div class="form-inline">
+            <textarea asp-for="Message" class="input-text" rows="3"></textarea>
+            <button id="btnPostChat" class="btn" type="button">投稿</button>
+        </div>
+    </div>
+    <div class="chat-display-area">
+        <div id="postChatLogErrors" class="validation-errors text-danger"><ul></ul></div>
+        <div id="chatLogs" class="chat-logs">
+            <partial name="_ChatLogsPartial" model="Model.Details" />
+        </div>
     </div>
 </form>
-
-<div class="chat-logs">
-    <partial name="_ChatLogsPartial" model="Model.Details" />
-</div>

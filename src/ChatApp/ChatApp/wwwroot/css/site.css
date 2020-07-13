@@ -198,6 +198,11 @@ dd {
         content: "：";
     }
 
+.validation-errors {
+    margin-top: 1rem;
+    overflow: auto;
+}
+
 span.required-mark {
     margin-left: 0.5rem;
     display: inline-block;
@@ -214,7 +219,7 @@ span.required-mark {
     background-color: #bd2130;
 }
 
-.chat-logs {
+.chat-display-area {
     padding-top: 50px;
 }
 
