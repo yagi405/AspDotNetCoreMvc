@@ -198,6 +198,22 @@ dd {
         content: "：";
     }
 
+span.required-mark {
+    margin-left: 0.5rem;
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: bold;
+    line-height: 1;
+    text-align: center;
+    vertical-align: baseline;
+    padding-right: 0.6em;
+    padding-left: 0.6em;
+    border-radius: 10rem;
+    color: white;
+    background-color: #bd2130;
+}
+
 .chat-logs {
     padding-top: 50px;
 }
