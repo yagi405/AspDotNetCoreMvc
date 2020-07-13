@@ -226,6 +226,7 @@ span.required-mark {
 .chat-log {
     margin-top: 20px;
     float: left;
+    text-align: left;
 }
 
 .chat-logs > div:after {
@@ -251,11 +252,13 @@ span.required-mark {
     border-radius: 30px 30px 30px 30px;
     position: relative;
     min-width: 90px;
+    max-width: 50%;
 }
 
     .chat-log .message p {
         display: inline-block;
         white-space: pre-wrap;
+        word-break: break-word;
     }
 
         .chat-log .message p:after {
@@ -270,6 +273,7 @@ span.required-mark {
 
 .mine .chat-log {
     float: right;
+    text-align: right;
 }
 
     .mine .chat-log .icon {
