@@ -1,0 +1,18 @@
+﻿@model IList<ChatIndexViewModel.Detail>
+
+@foreach (var chatLog in Model)
+{
+    <div class="@(chatLog.IsMine ? "mine" : "")">
+        <div class="chat-log">
+            <span class="small">@chatLog.PostAt</span>
+            @if (!chatLog.IsMine)
+            {
+                <span class="small">@chatLog.Name</span>
+            }
+            <img class="icon" src="@Url.Content(chatLog.IconUrl)" alt="@chatLog.Name" />
+            <div class="message">
+                <p>@chatLog.Message</p>
+            </div>
+        </div>
+    </div>
+}
