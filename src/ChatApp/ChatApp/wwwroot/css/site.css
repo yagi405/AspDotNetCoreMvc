@@ -250,6 +250,7 @@ span.required-mark {
 
     .chat-log .message p {
         display: inline-block;
+        white-space: pre-wrap;
     }
 
         .chat-log .message p:after {
