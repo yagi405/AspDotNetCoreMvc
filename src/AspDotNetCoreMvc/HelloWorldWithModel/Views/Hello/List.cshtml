@@ -1,0 +1,25 @@
+﻿@model IList<Person>
+
+<h1>List</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>名前</th>
+            <th>年齢</th>
+            <th>誕生日</th>
+            <th>既婚</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Name</td>
+                <td>@p.Age</td>
+                <td>@p.BirthDay</td>
+                <td>@p.IsMarried</td>
+            </tr>
+        }
+    </tbody>
+</table>
