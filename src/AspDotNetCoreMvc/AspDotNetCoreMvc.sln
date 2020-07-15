@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorldWithRouting", "He
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomAttribute", "CustomAttribute\CustomAttribute.csproj", "{6B971F8D-EDCF-4B52-9990-49A281F93096}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorldWithView", "HelloWorldWithView\HelloWorldWithView.csproj", "{C1833CA3-AD16-46BA-80BC-39AB91AB8448}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorldWithView", "HelloWorldWithView\HelloWorldWithView.csproj", "{C1833CA3-AD16-46BA-80BC-39AB91AB8448}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorldWithModel", "HelloWorldWithModel\HelloWorldWithModel.csproj", "{775B8DCF-8CFD-4392-AFBF-56AD3817534D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorldWithModel", "HelloWorldWithModel\HelloWorldWithModel.csproj", "{775B8DCF-8CFD-4392-AFBF-56AD3817534D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSyntax", "RazorSyntax\RazorSyntax.csproj", "{4B7D894D-9315-4B7C-A0D5-21451DDF612E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{775B8DCF-8CFD-4392-AFBF-56AD3817534D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{775B8DCF-8CFD-4392-AFBF-56AD3817534D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{775B8DCF-8CFD-4392-AFBF-56AD3817534D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B7D894D-9315-4B7C-A0D5-21451DDF612E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B7D894D-9315-4B7C-A0D5-21451DDF612E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B7D894D-9315-4B7C-A0D5-21451DDF612E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B7D894D-9315-4B7C-A0D5-21451DDF612E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

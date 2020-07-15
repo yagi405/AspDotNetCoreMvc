@@ -1,0 +1,48 @@
+﻿@model Person
+
+<div>
+    <dl>
+        <dt>
+            <label asp-for="Name"></label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            <label asp-for="Age"></label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+        <dt>
+            <label asp-for="BirthDay"></label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BirthDay)
+        </dd>
+        <dt>
+            <label asp-for="IsMarried"></label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsMarried)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Indexアクションメソッドへのリンク</a>
+</div>
+
+@*<h1>コメント</h1>*@
+
+@*
+    <div>
+        <dl>
+            <dt>
+                複数行
+            </dt>
+            <dd>
+                コメント
+            </dd>
+        </dl>
+    </div>
+*@
