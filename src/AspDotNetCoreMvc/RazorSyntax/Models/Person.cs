@@ -23,6 +23,8 @@ namespace RazorSyntax.Models
         [DisplayName("既婚")]
         public bool IsMarried { get; set; }
 
+        public Person() { }
+
         public Person(string name, int age, DateTime birthDay, bool isMarried) =>
             (Name, Age, BirthDay, IsMarried) = (name, age, birthDay, isMarried);
     }

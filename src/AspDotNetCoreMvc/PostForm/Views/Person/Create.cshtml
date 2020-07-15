@@ -1,0 +1,26 @@
+﻿@model Person
+
+<h1>Create</h1>
+<hr />
+<div>
+    <form asp-action="Create">
+        <div>
+            <label asp-for="Name"></label>
+            <input asp-for="Name" />
+        </div>
+        <div>
+            <label asp-for="Age"></label>
+            <input asp-for="Age" />
+        </div>
+        <div>
+            <label asp-for="BirthDay"></label>
+            <input asp-for="BirthDay" />
+        </div>
+        <div>
+            <input asp-for="IsMarried" /><label asp-for="IsMarried"></label>
+        </div>
+        <div>
+            <input type="submit" value="Create" />
+        </div>
+    </form>
+</div>
