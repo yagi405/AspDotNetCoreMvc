@@ -1,206 +1,96 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using ChatApp.Models.Entities;
-using ChatApp.Models.Entities.DbEntities;
-using ChatApp.Models.Extensions;
-using ChatApp.Models.Util;
+﻿using System.Linq;
+using ChatApp.Common;
+using ChatApp.Infrastructure.Persistence.Entities;
+using ChatApp.Infrastructure.Persistence.Repositories;
+using ChatApp.Models.ViewModels;
 
 namespace ChatApp.Models.Services.Imp
 {
-    public class UserService : AbstractDbService, IUserService
+    public class UserService : IUserService
     {
-        public UserService(IDbConnection dbConnection)
-            : base(dbConnection) { }
+        private readonly IUserRepository _userRepository;
 
-        public User GetById(string userId)
+        public UserService(IUserRepository userRepository)
         {
-            if (string.IsNullOrEmpty(userId))
+            _userRepository = userRepository;
+        }
+
+        public string GetUserId(string userId)
+        {
+            Args.NotEmpty(userId, nameof(userId));
+            return _userRepository.GetById(userId)?.UserId;
+        }
+
+        public UserIndexViewModel GetIndexViewModel()
+        {
+            var users = _userRepository.GetAll();
+            var details = users
+                .Select(x => new UserIndexViewModel.Detail()
+                {
+                    UserId = x.UserId,
+                    Name = x.UserName,
+                    IsAdministrator = x.IsAdministrator,
+                })
+                .ToList();
+
+            return new UserIndexViewModel()
             {
-                return null;
-            }
+                Details = details
+            };
+        }
 
-            const string cmdText = @"
-select
-	UserId,
-	UserName,
-	PasswordType,
-	PasswordSalt,
-	Password,
-	IsAdministrator
-from
-	Users
-where
-	UserId = @userId
-";
-            using var cmd = Connection.CreateCommand();
-            cmd.CommandText = cmdText;
-            var p = cmd.CreateParameter();
-            p.ParameterName = "@userId";
-            p.Value = userId;
-            cmd.Parameters.Add(p);
-            using var reader = cmd.ExecuteReader();
-            while (reader.Read())
+        public void Create(UserCreateViewModel model)
+        {
+            Args.NotNull(model, nameof(model));
+
+            var user = new User(
+                model.UserId,
+                model.Name,
+                PasswordType.PlainText,
+                null,
+                model.UserId,
+                model.IsAdministrator
+            );
+
+            _userRepository.Create(user);
+        }
+
+        public UserEditViewModel GetNewEditViewModel(string userId)
+        {
+            Args.NotEmpty(userId, nameof(userId));
+
+            var user = _userRepository.GetById(userId);
+            return new UserEditViewModel()
             {
-                return new User(
-                    reader["UserId"].ToString(),
-                    reader["UserName"].ToString(),
-                    (PasswordType)reader["PasswordType"],
-                    reader["PasswordSalt"] as string,
-                    reader["Password"] as string,
-                    (bool)reader["IsAdministrator"]
-                );
-            }
-            return null;
+                UserId = user.UserId,
+                Name = user.UserName,
+                IsAdministrator = user.IsAdministrator,
+            };
         }
 
-        public IList<User> GetAll()
+        public void Edit(UserEditViewModel model)
         {
-            const string cmdText = @"
-select
-	UserId,
-	UserName,
-	PasswordType,
-	PasswordSalt,
-	Password,
-	IsAdministrator
-from
-	Users
-order by
-    UserId
-";
-            using var cmd = Connection.CreateCommand();
-            cmd.CommandText = cmdText;
-            using var reader = cmd.ExecuteReader();
-            var users = new List<User>();
-            while (reader.Read())
+            Args.NotNull(model, nameof(model));
+            _userRepository.Edit(model.UserId, model.Name, model.IsAdministrator);
+        }
+
+        public UserDeleteViewModel GetNewDeleteViewModel(string userId)
+        {
+            Args.NotEmpty(userId, nameof(userId));
+
+            var user = _userRepository.GetById(userId);
+            return new UserDeleteViewModel()
             {
-                users.Add(
-                new User(
-                        reader["UserId"].ToString(),
-                        reader["UserName"].ToString(),
-                        (PasswordType)reader["PasswordType"],
-                        reader["PasswordSalt"] as string,
-                        reader["Password"] as string,
-                        (bool)reader["IsAdministrator"]
-                        )
-                );
-            }
-            return users;
+                UserId = user.UserId,
+                Name = user.UserName,
+                IsAdministrator = user.IsAdministrator,
+            };
         }
 
-        public bool ChangePassword(User user, string salt, string hashedPassword)
+        public void Delete(UserDeleteViewModel model)
         {
-            Args.NotNull(user, nameof(user));
-
-            const string cmdText = @"
-Update 
-	Users
-set
-	PasswordType = @passwordType,
-	PasswordSalt = @passwordSalt,
-	Password = @password
-where
-	UserId = @userId 
-";
-            using var cmd = Connection.CreateCommand();
-            cmd.CommandText = cmdText;
-            cmd.AddParameter("@passwordType", PasswordType.Hashed);
-            cmd.AddParameter("@passwordSalt", salt);
-            cmd.AddParameter("@password", hashedPassword);
-            cmd.AddParameter("@userId", user.UserId);
-            return cmd.ExecuteNonQuery() == 1;
-        }
-
-        public bool ChangeUserName(User user, string userName)
-        {
-            Args.NotNull(user, nameof(user));
-
-            const string cmdText = @"
-update 
-	Users
-set
-	UserName = @userName
-where
-	UserId = @userId 
-";
-            using var cmd = Connection.CreateCommand();
-            cmd.CommandText = cmdText;
-            cmd.AddParameter("@userId", user.UserId);
-            cmd.AddParameter("@userName", userName);
-            return cmd.ExecuteNonQuery() == 1;
-        }
-
-        public User Create(User user)
-        {
-            Args.NotNull(user, nameof(user));
-
-            const string cmdText = @"
-insert into
-	Users(
-		UserId,
-		UserName,
-		PasswordType,
-		PasswordSalt,
-		Password,
-		IsAdministrator
-	)
-values(@userId,@userName,@passwordType,@passwordSalt,@password,@isAdministrator)
-";
-
-            using var cmd = Connection.CreateCommand();
-            cmd.CommandText = cmdText;
-            cmd.AddParameter("@userId", user.UserId);
-            cmd.AddParameter("@userName", user.UserName);
-            cmd.AddParameter("@passwordType", user.PasswordType);
-            cmd.AddParameter("@passwordSalt", user.PasswordSalt);
-            cmd.AddParameter("@password", user.Password);
-            cmd.AddParameter("@isAdministrator", user.IsAdministrator);
-            cmd.ExecuteNonQuery();
-
-            return user;
-        }
-
-        public bool Edit(string userId, string userName, bool isAdministrator)
-        {
-            if (string.IsNullOrEmpty(userId))
-            {
-                return false;
-            }
-
-            const string cmdText = @"
-update 
-	Users
-set
-	UserName = @userName,
-	IsAdministrator = @isAdministrator
-where
-	UserId = @userId 
-";
-            using var cmd = Connection.CreateCommand();
-            cmd.CommandText = cmdText;
-            cmd.AddParameter("@userId", userId);
-            cmd.AddParameter("@userName", userName);
-            cmd.AddParameter("@isAdministrator", isAdministrator);
-            return cmd.ExecuteNonQuery() == 1;
-        }
-
-        public bool Delete(string userId)
-        {
-            if (string.IsNullOrEmpty(userId))
-            {
-                return false;
-            }
-
-            const string cmdText = @"
-delete from
-	Users
-where
-	UserId = @userId
-";
-            using var cmd = Connection.CreateCommand();
-            cmd.CommandText = cmdText;
-            cmd.AddParameter("@userId", userId);
-            return cmd.ExecuteNonQuery() == 1;
+            Args.NotNull(model, nameof(model));
+            _userRepository.Delete(model.UserId);
         }
     }
 }

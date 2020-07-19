@@ -1,4 +1,4 @@
-﻿using ChatApp.Models.Entities.ViewEntities;
+﻿using ChatApp.Models.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +7,13 @@ namespace ChatApp.Controllers
 {
     public class AppController : Controller
     {
+        private readonly IAppService _appService;
+
+        public AppController(IAppService appService)
+        {
+            _appService = appService;
+        }
+
         [AllowAnonymous]
         [IgnoreAntiforgeryToken]
         public IActionResult Error([Bind(Prefix = "id")] int statusCode = 0)
@@ -17,11 +24,10 @@ namespace ChatApp.Controllers
                     return RedirectToAction(nameof(PageNotFound));
             }
 
-            var model = new AppErrorViewModel()
-            {
-                StatusCode = statusCode,
-                Ex = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error,
-            };
+            var model = _appService.GetNewErrorViewModel(
+                statusCode,
+                HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error
+                );
 
             return View(model);
         }

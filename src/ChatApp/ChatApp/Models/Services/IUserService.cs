@@ -1,22 +1,21 @@
-﻿using System.Collections.Generic;
-using ChatApp.Models.Entities.DbEntities;
+﻿using ChatApp.Models.ViewModels;
 
 namespace ChatApp.Models.Services
 {
     public interface IUserService
     {
-        User GetById(string userId);
+        string GetUserId(string userId);
 
-        IList<User> GetAll();
+        UserIndexViewModel GetIndexViewModel();
 
-        bool ChangePassword(User user, string salt, string hashedPassword);
+        void Create(UserCreateViewModel model);
 
-        bool ChangeUserName(User user, string userName);
+        UserEditViewModel GetNewEditViewModel(string userId);
 
-        User Create(User user);
+        void Edit(UserEditViewModel model);
 
-        bool Edit(string userId, string userName, bool isAdministrator);
+        UserDeleteViewModel GetNewDeleteViewModel(string userId);
 
-        bool Delete(string userId);
+        void Delete(UserDeleteViewModel model);
     }
 }

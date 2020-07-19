@@ -253,6 +253,7 @@ span.required-mark {
     position: relative;
     min-width: 90px;
     max-width: 50%;
+    text-align: left;
 }
 
     .chat-log .message p {

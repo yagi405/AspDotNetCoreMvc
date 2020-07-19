@@ -1,8 +1,7 @@
 ﻿using System;
-using ChatApp.Models.Entities.ViewEntities;
-using ChatApp.Models.Mappers;
+using ChatApp.Common;
 using ChatApp.Models.Services;
-using ChatApp.Models.Util;
+using ChatApp.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,20 +11,17 @@ namespace ChatApp.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        private readonly IUserMapper _userMapper;
 
-        public UserController(IUserService userService, IUserMapper userMapper)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _userMapper = userMapper;
         }
 
         // GET: UserController
         [HttpGet]
         public IActionResult Index()
         {
-            var users = _userService.GetAll();
-            return View(_userMapper.FromUserToIndexViewModel(users));
+            return View(_userService.GetIndexViewModel());
         }
 
         // GET: UserController/Create
@@ -46,15 +42,14 @@ namespace ChatApp.Controllers
 
             try
             {
-                if (_userService.GetById(model.UserId) != null)
+                if (_userService.GetUserId(model.UserId) != null)
                 {
                     ModelState.AddModelError("", "そのユーザーIDは既に使用されています。");
                     return View(model);
                 }
 
-                var user = _userMapper.FromCreateViewModelToUser(model);
-                _userService.Create(user);
-                TempData[AppConst.TempDataKeyMessage] = $"{user.UserId} を作成しました。";
+                _userService.Create(model);
+                TempData[AppConst.TempDataKeyMessage] = $"{model.UserId} を作成しました。";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -68,12 +63,12 @@ namespace ChatApp.Controllers
         [HttpGet]
         public IActionResult Edit(string userId)
         {
-            var user = _userService.GetById(userId);
-            if (user == null)
+            var model = _userService.GetNewEditViewModel(userId);
+            if (model == null)
             {
                 return NotFound();
             }
-            return View(_userMapper.FromUserToEditViewModel(user));
+            return View(model);
         }
 
         // POST: UserController/Edit/5
@@ -87,19 +82,15 @@ namespace ChatApp.Controllers
 
             try
             {
-                var user = _userService.GetById(model.UserId);
-                if (user == null)
+                var userId = _userService.GetUserId(model.UserId);
+                if (userId == null)
                 {
                     return NotFound();
                 }
 
-                if (!_userService.Edit(model.UserId, model.Name, model.IsAdministrator))
-                {
-                    ModelState.AddModelError("", "ユーザー情報の更新に失敗しました。");
-                    return View(model);
-                }
-
-                TempData[AppConst.TempDataKeyMessage] = $"{user.UserId} の情報を更新しました。";
+                _userService.Edit(model);
+                
+                TempData[AppConst.TempDataKeyMessage] = $"{userId} の情報を更新しました。";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -113,12 +104,12 @@ namespace ChatApp.Controllers
         [HttpGet]
         public IActionResult Delete(string userId)
         {
-            var user = _userService.GetById(userId);
-            if (user == null)
+            var model = _userService.GetNewDeleteViewModel(userId);
+            if (model == null)
             {
                 return NotFound();
             }
-            return View(_userMapper.FromUserToDeleteViewModel(user));
+            return View(model);
         }
 
         // POST: UserController/Delete/5
@@ -132,19 +123,15 @@ namespace ChatApp.Controllers
 
             try
             {
-                var user = _userService.GetById(model.UserId);
-                if (user == null)
+                var userId = _userService.GetUserId(model.UserId);
+                if (userId == null)
                 {
                     return NotFound();
                 }
 
-                if (!_userService.Delete(model.UserId))
-                {
-                    ModelState.AddModelError("", "ユーザーの削除に失敗しました。");
-                    return View(model);
-                }
+                _userService.Delete(model);
 
-                TempData[AppConst.TempDataKeyMessage] = $"{user.UserId} を削除しました。";
+                TempData[AppConst.TempDataKeyMessage] = $"{userId} を削除しました。";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)

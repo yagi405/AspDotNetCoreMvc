@@ -1,10 +1,9 @@
 ﻿using System;
-using ChatApp.Models.Attributes;
-using ChatApp.Models.Entities.ViewEntities;
-using ChatApp.Models.Extensions;
-using ChatApp.Models.Mappers;
+using ChatApp.Attributes;
+using ChatApp.Common;
+using ChatApp.Extensions;
 using ChatApp.Models.Services;
-using ChatApp.Models.Util;
+using ChatApp.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,30 +12,17 @@ namespace ChatApp.Controllers
     [Authorize]
     public class ChatController : Controller
     {
-        private readonly IChatLogService _chatLogService;
-        private readonly IChatMapper _chatMapper;
+        private readonly IChatService _chatService;
 
-        public ChatController(IChatLogService chatLogService, IChatMapper chatMapper)
+        public ChatController(IChatService chatService)
         {
-            _chatLogService = chatLogService;
-            _chatMapper = chatMapper;
-        }
-
-        private ChatIndexViewModel GetIndexViewModel()
-        {
-            var chatLogs = _chatLogService.GetLatest();
-            return _chatMapper.FromChatLogToViewModel(chatLogs, User.UserId());
-        }
-
-        private IActionResult GetIndexActionResult()
-        {
-            return View(GetIndexViewModel());
+            _chatService = chatService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            return GetIndexActionResult();
+            return View(_chatService.GetIndexViewModel(User.UserId()));
         }
 
         [HttpPost]
@@ -50,12 +36,11 @@ namespace ChatApp.Controllers
 
             try
             {
-                var response = new CommandResponse();
                 if (!string.IsNullOrEmpty(model.Message))
                 {
-                    _chatLogService.Post(model.Message, User.UserId());
+                    _chatService.Post(model.Message, User.UserId());
                 }
-                return Json(response);
+                return Json(new CommandResponse());
             }
             catch (Exception ex)
             {
@@ -69,7 +54,7 @@ namespace ChatApp.Controllers
         [AjaxOnly]
         public IActionResult Refresh()
         {
-            var details = GetIndexViewModel()?.Details;
+            var details = _chatService.GetIndexDetailsViewModel(User.UserId());
             return PartialView("_ChatLogsPartial", details);
         }
     }

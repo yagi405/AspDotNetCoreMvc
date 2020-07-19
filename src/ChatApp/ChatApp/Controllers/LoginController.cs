@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ChatApp.Models.Entities;
-using ChatApp.Models.Entities.ViewEntities;
+using ChatApp.Common;
 using ChatApp.Models.Services;
-using ChatApp.Models.Util;
+using ChatApp.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,23 +11,18 @@ namespace ChatApp.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly IAuthService _authService;
-        private readonly IUserService _userService;
+        private readonly ILoginService _loginService;
 
-        public LoginController(IAuthService authService, IUserService userService)
+        public LoginController(ILoginService loginService)
         {
-            _authService = authService;
-            _userService = userService;
+            _loginService = loginService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
             var userId = TempData[AppConst.TempDataKeyUserId] as string;
-            return View(new LoginIndexViewModel()
-            {
-                UserId = userId,
-            });
+            return View(_loginService.GetNewIndexViewModel(userId));
         }
 
         [HttpPost]
@@ -39,7 +33,7 @@ namespace ChatApp.Controllers
                 return View(model);
             }
 
-            var identity = _authService.Authenticate(model.UserId, model.Password, out var user);
+            var identity = _loginService.Authenticate(model, out var user);
             if (identity == null)
             {
                 ModelState.AddModelError("", "ログインに失敗しました。");
@@ -66,10 +60,7 @@ namespace ChatApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(new LoginChangePasswordViewModel()
-            {
-                UserId = userId,
-            });
+            return View(_loginService.GetNewChangePasswordViewModel(userId));
         }
 
         [HttpPost]
@@ -82,13 +73,13 @@ namespace ChatApp.Controllers
                     return View(model);
                 }
 
-                var user = _userService.GetById(model.UserId);
-                if (user == null)
+                var userId = _loginService.GetUserId(model.UserId);
+                if (userId == null)
                 {
                     return NotFound();
                 }
 
-                if (_authService.Authenticate(model.UserId, model.CurrentPassword, out _) == null)
+                if (!_loginService.Authenticate(model))
                 {
                     ModelState.AddModelError(
                         nameof(LoginChangePasswordViewModel.CurrentPassword)
@@ -96,15 +87,10 @@ namespace ChatApp.Controllers
                     return View(model);
                 }
 
-                var (salt, hashedPassword) = _authService.GenerateSaltAndHashedPassword(model.NewPassword);
-                if (!_userService.ChangePassword(user, salt, hashedPassword))
-                {
-                    ModelState.AddModelError("", "パスワードの変更に失敗しました。");
-                    return View(model);
-                }
+                _loginService.ChangePassword(userId, model);
 
                 TempData[AppConst.TempDataKeyMessage] = "パスワードを変更しました。再度ログインしてください。";
-                TempData[AppConst.TempDataKeyUserId] = user.UserId;
+                TempData[AppConst.TempDataKeyUserId] = userId;
 
                 return RedirectToAction(nameof(Index));
             }

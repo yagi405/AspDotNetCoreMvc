@@ -1,10 +1,9 @@
 using System.Data;
 using System.Data.SqlClient;
-using ChatApp.Models.Attributes;
-using ChatApp.Models.Managers;
-using ChatApp.Models.Managers.Imp;
-using ChatApp.Models.Mappers;
-using ChatApp.Models.Mappers.Imp;
+using ChatApp.Infrastructure.Logging;
+using ChatApp.Infrastructure.Persistence.Repositories;
+using ChatApp.Infrastructure.Persistence.Repositories.Imp;
+using ChatApp.Models;
 using ChatApp.Models.Services;
 using ChatApp.Models.Services.Imp;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -56,11 +55,14 @@ namespace ChatApp
                 .AddScoped<IDbConnection>(
                     _ => new SqlConnection(Configuration.GetConnectionString("DefaultConnection"))
                 )
-                .AddScoped<IAuthService, AuthService>()
+                .AddScoped<IChatLogRepository, ChatLogRepository>()
+                .AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IAccountService, AccountService>()
+                .AddScoped<IAppService, AppService>()
+                .AddScoped<IChatService, ChatService>()
+                .AddScoped<ILoginService, LoginService>()
                 .AddScoped<IUserService, UserService>()
-                .AddScoped<IChatLogService, ChatLogService>()
-                .AddScoped<IChatMapper, ChatMapper>()
-                .AddScoped<IUserMapper, UserMapper>()
+                .AddScoped<IAuthenticator, Authenticator>()
                 .AddScoped<IPasswordManager, PasswordManager>();
         }
 
@@ -96,8 +98,8 @@ namespace ChatApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Login}/{action=Index}/{id?}"
+                    "default",
+                    "{controller=Login}/{action=Index}/{id?}"
                 );
             });
         }

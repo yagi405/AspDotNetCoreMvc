@@ -1,8 +1,8 @@
 ﻿using System;
-using ChatApp.Models.Entities.ViewEntities;
-using ChatApp.Models.Extensions;
+using ChatApp.Common;
+using ChatApp.Extensions;
 using ChatApp.Models.Services;
-using ChatApp.Models.Util;
+using ChatApp.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,28 +11,22 @@ namespace ChatApp.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly IUserService _userService;
-        private readonly IAuthService _authService;
+        private readonly IAccountService _accountService;
 
-        public AccountController(IUserService userService, IAuthService authService)
+        public AccountController(IAccountService accountService)
         {
-            _userService = userService;
-            _authService = authService;
+            _accountService = accountService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var user = _userService.GetById(User.UserId());
-            if (user == null)
+            var model = _accountService.GetNewIndexViewModel(User.UserId());
+            if (model == null)
             {
                 return NotFound();
             }
-
-            return View(new AccountIndexViewModel()
-            {
-                Name = user.UserName,
-            });
+            return View(model);
         }
 
         [HttpPost]
@@ -45,18 +39,13 @@ namespace ChatApp.Controllers
 
             try
             {
-                var user = _userService.GetById(User.UserId());
-                if (user == null)
+                var userId = _accountService.GetUserId(User);
+                if (userId == null)
                 {
                     return NotFound();
                 }
 
-                if (!_userService.ChangeUserName(user, model.Name))
-                {
-                    ModelState.AddModelError("", "プロフィールの更新に失敗しました。");
-                    return View(model);
-                }
-
+                _accountService.ChangeUserName(userId, model);
                 TempData[AppConst.TempDataKeyMessage] = "プロフィールを更新しました。";
                 return RedirectToAction(nameof(Index));
             }
@@ -70,8 +59,8 @@ namespace ChatApp.Controllers
         [HttpGet]
         public IActionResult ChangePassword()
         {
-            var user = _userService.GetById(User.UserId());
-            if (user == null)
+            var userId = _accountService.GetUserId(User);
+            if (userId == null)
             {
                 return NotFound();
             }
@@ -88,27 +77,21 @@ namespace ChatApp.Controllers
 
             try
             {
-                var user = _userService.GetById(User.UserId());
-                if (user == null)
+                var userId = _accountService.GetUserId(User);
+                if (userId == null)
                 {
                     return NotFound();
                 }
 
-                if (_authService.Authenticate(user.UserId, model.CurrentPassword, out _) == null)
+                if (!_accountService.Authenticate(userId, model))
                 {
                     ModelState.AddModelError(
                         nameof(AccountChangePasswordViewModel.CurrentPassword)
                         , "現在のパスワードが違います。");
-                    return RedirectToAction(nameof(ChangePassword));
+                    return View(model);
                 }
 
-                var (salt, hashedPassword) = _authService.GenerateSaltAndHashedPassword(model.NewPassword);
-                if (!_userService.ChangePassword(user, salt, hashedPassword))
-                {
-                    ModelState.AddModelError("", "パスワードの変更に失敗しました。");
-                    return RedirectToAction(nameof(ChangePassword));
-                }
-
+                _accountService.ChangePassword(userId, model);
                 TempData[AppConst.TempDataKeyMessage] = "パスワードを変更しました。";
 
                 return RedirectToAction(nameof(Index));
