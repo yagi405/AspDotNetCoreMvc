@@ -118,30 +118,42 @@ namespace ChatApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult ChangeIcon(IFormFile icon)
+        public IActionResult ChangeIcon(AccountChangeIconViewModel model)
         {
-            var userId = _accountService.GetUserId(User);
-            if (userId == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return View(model);
             }
 
-            if (icon == null)
+            try
             {
-                return RedirectToAction(nameof(ChangeIcon));
-            }
+                var userId = _accountService.GetUserId(User);
+                if (userId == null)
+                {
+                    return NotFound();
+                }
 
-            if (icon.Length > 0)
+                if (model.Icon == null)
+                {
+                    return RedirectToAction(nameof(ChangeIcon));
+                }
+
+                if (model.Icon.Length > 0)
+                {
+                    var fileName = Path.GetFileName(model.Icon.FileName);
+                    //var filePath = Path.Combine(_env.ContentRootPath, "Uploads", fileName);
+                    //using (var stream = new FileStream(filePath, FileMode.Create))
+                    //{
+                    //    icon.CopyTo(stream);
+                    //}
+                }
+                return View();
+            }
+            catch (Exception ex)
             {
-                var fileName = Path.GetFileName(icon.FileName);
-                //var filePath = Path.Combine(_env.ContentRootPath, "Uploads", fileName);
-                //using (var stream = new FileStream(filePath, FileMode.Create))
-                //{
-                //    icon.CopyTo(stream);
-                //}
+                ModelState.AddModelError("", ex.ToString());
+                return View(model);
             }
-
-            return View();
         }
     }
 }
