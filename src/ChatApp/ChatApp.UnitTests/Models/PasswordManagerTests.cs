@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Xunit;
 
-namespace ChatApp.UnitTests.Models.Managers
+namespace ChatApp.UnitTests.Models
 {
     public class PasswordManagerTests
     {

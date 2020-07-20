@@ -10,11 +10,13 @@ namespace ChatApp.Models.Services.Imp
     {
         private readonly IUserRepository _userRepository;
         private readonly IAuthenticator _authenticator;
+        private readonly IPasswordManager _passwordManager;
 
-        public AccountService(IUserRepository userRepository, IAuthenticator authenticator)
+        public AccountService(IUserRepository userRepository, IAuthenticator authenticator, IPasswordManager passwordManager)
         {
             _userRepository = userRepository;
             _authenticator = authenticator;
+            _passwordManager = passwordManager;
         }
 
         public string GetUserId(ClaimsPrincipal user)
@@ -61,7 +63,7 @@ namespace ChatApp.Models.Services.Imp
             Args.NotEmpty(userId, nameof(userId));
             Args.NotNull(model, nameof(model));
 
-            var (salt, hashedPassword) = _authenticator.GenerateSaltAndHashedPassword(model.NewPassword);
+            var (salt, hashedPassword) = _passwordManager.GenerateSaltAndHashedPassword(model.NewPassword);
             _userRepository.ChangePassword(userId, salt, hashedPassword);
         }
     }

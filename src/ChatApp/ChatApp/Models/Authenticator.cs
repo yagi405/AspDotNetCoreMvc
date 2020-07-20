@@ -1,8 +1,5 @@
-﻿using System;
-using System.Security.Claims;
-using System.Security.Cryptography;
+﻿using System.Security.Claims;
 using System.Security.Principal;
-using System.Text;
 using ChatApp.Common;
 using ChatApp.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -11,8 +8,6 @@ namespace ChatApp.Models
 {
     public class Authenticator : IAuthenticator
     {
-        private const int SaltSize = 24;
-
         private readonly IPasswordManager _passwordManager;
         private readonly IUserRepository _userRepository;
 
@@ -72,22 +67,6 @@ namespace ChatApp.Models
             }
 
             return identity;
-        }
-
-        public string GenerateSalt()
-        {
-            using var provider = new RNGCryptoServiceProvider();
-            var salt = new byte[SaltSize];
-            provider.GetBytes(salt);
-            return Convert.ToBase64String(salt);
-        }
-
-        public (string salt, string hashedPassword) GenerateSaltAndHashedPassword(string plainTextPassword)
-        {
-            var salt = GenerateSalt();
-            using var sha = new SHA256CryptoServiceProvider();
-            var hashed = sha.ComputeHash(Encoding.UTF8.GetBytes(plainTextPassword + salt));
-            return (salt, Convert.ToBase64String(hashed));
         }
     }
 }
