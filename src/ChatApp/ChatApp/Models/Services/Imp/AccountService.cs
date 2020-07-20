@@ -22,7 +22,7 @@ namespace ChatApp.Models.Services.Imp
         public string GetUserId(ClaimsPrincipal user)
         {
             Args.NotNull(user, nameof(user));
-            
+
             return _userRepository.GetById(user.UserId())?.UserId;
         }
 
@@ -65,6 +65,11 @@ namespace ChatApp.Models.Services.Imp
 
             var (salt, hashedPassword) = _passwordManager.GenerateSaltAndHashedPassword(model.NewPassword);
             _userRepository.ChangePassword(userId, salt, hashedPassword);
+        }
+
+        public void ChangeUserIcon(string userId, string filePath)
+        {
+
         }
     }
 }

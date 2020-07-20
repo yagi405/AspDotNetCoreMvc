@@ -14,5 +14,7 @@ namespace ChatApp.Models.Services
         bool Authenticate(string userId, AccountChangePasswordViewModel model);
 
         void ChangePassword(string userId, AccountChangePasswordViewModel model);
+
+        void ChangeUserIcon(string userId, string filePath);
     }
 }

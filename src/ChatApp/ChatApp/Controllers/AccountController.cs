@@ -5,7 +5,7 @@ using ChatApp.Extensions;
 using ChatApp.Models.Services;
 using ChatApp.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatApp.Controllers
@@ -14,10 +14,12 @@ namespace ChatApp.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
+        private readonly IWebHostEnvironment _env;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, IWebHostEnvironment env)
         {
             _accountService = accountService;
+            _env = env;
         }
 
         [HttpGet]
@@ -133,21 +135,20 @@ namespace ChatApp.Controllers
                     return NotFound();
                 }
 
-                if (model.Icon == null)
+                if (model.Icon == null || model.Icon.Length <= 0)
                 {
                     return RedirectToAction(nameof(ChangeIcon));
                 }
 
-                if (model.Icon.Length > 0)
-                {
-                    var fileName = Path.GetFileName(model.Icon.FileName);
-                    //var filePath = Path.Combine(_env.ContentRootPath, "Uploads", fileName);
-                    //using (var stream = new FileStream(filePath, FileMode.Create))
-                    //{
-                    //    icon.CopyTo(stream);
-                    //}
-                }
-                return View();
+                var ext = Path.GetExtension(model.Icon.FileName);
+                var filePath = Path.Combine(_env.ContentRootPath, "Uploads/users", $"{userId}{ext}");
+                using var stream = new FileStream(filePath, FileMode.Create);
+                model.Icon.CopyTo(stream);
+
+                _accountService.ChangeUserIcon(userId, filePath);
+                TempData[AppConst.TempDataKeyMessage] = "アイコンを変更しました。";
+
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
