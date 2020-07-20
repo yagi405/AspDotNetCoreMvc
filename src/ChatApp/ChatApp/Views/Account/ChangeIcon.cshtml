@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "ChangeIcon";
+}
+
+<h1>アイコン変更</h1>
+<span>アイコンを変更します。</span>
+<hr />
+<form asp-action="ChangeIcon" enctype="multipart/form-data">
+    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+    <div class="form-group" style="width: 130px">
+        <div class="file-container" data-notselected="選択されていません">
+            <input type="file" name="icon" />
+            <div id="icon-selected-container">
+                <img id="icon-preview" class="file-preview icon" alt="preview" />
+                <div id="icon-selected"></div>
+            </div>
+            <div class="text-center">
+                <button class="btn file-remover">削除</button>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input class="btn" type="submit" value="アップロード" />
+    </div>
+</form>

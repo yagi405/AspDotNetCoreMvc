@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using ChatApp.Common;
 using ChatApp.Extensions;
 using ChatApp.Models.Services;
 using ChatApp.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatApp.Controllers
@@ -101,6 +103,45 @@ namespace ChatApp.Controllers
                 ModelState.AddModelError("", ex.ToString());
                 return View(model);
             }
+        }
+
+        [HttpGet]
+        public IActionResult ChangeIcon()
+        {
+            var userId = _accountService.GetUserId(User);
+            if (userId == null)
+            {
+                return NotFound();
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ChangeIcon(IFormFile icon)
+        {
+            var userId = _accountService.GetUserId(User);
+            if (userId == null)
+            {
+                return NotFound();
+            }
+
+            if (icon == null)
+            {
+                return RedirectToAction(nameof(ChangeIcon));
+            }
+
+            if (icon.Length > 0)
+            {
+                var fileName = Path.GetFileName(icon.FileName);
+                //var filePath = Path.Combine(_env.ContentRootPath, "Uploads", fileName);
+                //using (var stream = new FileStream(filePath, FileMode.Create))
+                //{
+                //    icon.CopyTo(stream);
+                //}
+            }
+
+            return View();
         }
     }
 }
