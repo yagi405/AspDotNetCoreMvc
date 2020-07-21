@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorSyntax", "RazorSyntax\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostForm", "PostForm\PostForm.csproj", "{88377BEB-4C0A-4675-ACDF-386064DCC416}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadFile", "UploadFile\UploadFile.csproj", "{5F567F31-E272-40D8-8EF1-D90B894A4F9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UploadFile", "UploadFile\UploadFile.csproj", "{5F567F31-E272-40D8-8EF1-D90B894A4F9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibMan", "LibMan\LibMan.csproj", "{AA70C6A6-F766-420C-A462-63846DB153E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{5F567F31-E272-40D8-8EF1-D90B894A4F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F567F31-E272-40D8-8EF1-D90B894A4F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F567F31-E272-40D8-8EF1-D90B894A4F9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA70C6A6-F766-420C-A462-63846DB153E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA70C6A6-F766-420C-A462-63846DB153E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA70C6A6-F766-420C-A462-63846DB153E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA70C6A6-F766-420C-A462-63846DB153E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
