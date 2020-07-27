@@ -76,6 +76,7 @@ namespace ChatApp
             else
             {
                 app.UseExceptionHandler("/App/Error");
+                app.UseHsts();
             }
 
             app.UseStatusCodePagesWithReExecute("/App/Error/{0}");
