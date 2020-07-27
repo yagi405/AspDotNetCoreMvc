@@ -157,6 +157,7 @@ namespace ChatApp.Controllers
             }
         }
 
+        [NonAction]
         private async Task<string> UploadUserIconAsync(IFormFile icon, string fileName)
         {
             Args.NotNull(icon, nameof(icon));
