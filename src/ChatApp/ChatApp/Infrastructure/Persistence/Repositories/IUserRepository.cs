@@ -13,10 +13,13 @@ namespace ChatApp.Infrastructure.Persistence.Repositories
 
         void ChangeUserName(string userId, string userName);
 
+        void ChangeUserIcon(string userId, string iconUrl);
+
         User Create(User user);
 
         void Edit(string userId, string userName, bool isAdministrator);
 
         void Delete(string userId);
+
     }
 }

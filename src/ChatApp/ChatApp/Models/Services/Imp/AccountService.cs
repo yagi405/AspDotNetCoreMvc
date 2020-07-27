@@ -67,9 +67,12 @@ namespace ChatApp.Models.Services.Imp
             _userRepository.ChangePassword(userId, salt, hashedPassword);
         }
 
-        public void ChangeUserIcon(string userId, string filePath)
+        public void ChangeUserIcon(string userId, string iconUrl)
         {
+            Args.NotEmpty(userId, nameof(userId));
+            Args.NotEmpty(iconUrl, nameof(iconUrl));
 
+            _userRepository.ChangeUserIcon(userId, iconUrl);
         }
     }
 }

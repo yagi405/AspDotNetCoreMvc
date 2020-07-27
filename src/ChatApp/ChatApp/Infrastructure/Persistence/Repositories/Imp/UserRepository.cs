@@ -24,7 +24,8 @@ select
 	PasswordType,
 	PasswordSalt,
 	Password,
-	IsAdministrator
+	IsAdministrator,
+    IconUrl
 from
 	Users
 where
@@ -45,7 +46,8 @@ where
                     (PasswordType)reader["PasswordType"],
                     reader["PasswordSalt"] as string,
                     reader["Password"] as string,
-                    (bool)reader["IsAdministrator"]
+                    (bool)reader["IsAdministrator"],
+                    reader["IconUrl"] as string
                 );
             }
             return null;
@@ -60,7 +62,8 @@ select
 	PasswordType,
 	PasswordSalt,
 	Password,
-	IsAdministrator
+	IsAdministrator,
+    IconUrl
 from
 	Users
 order by
@@ -79,7 +82,8 @@ order by
                         (PasswordType)reader["PasswordType"],
                         reader["PasswordSalt"] as string,
                         reader["Password"] as string,
-                        (bool)reader["IsAdministrator"]
+                        (bool)reader["IsAdministrator"],
+                        reader["IconUrl"] as string
                         )
                 );
             }
@@ -128,6 +132,26 @@ where
             cmd.CommandText = cmdText;
             cmd.AddParameter("@userId", userId);
             cmd.AddParameter("@userName", userName);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void ChangeUserIcon(string userId, string iconUrl)
+        {
+            Args.NotEmpty(userId, nameof(userId));
+            Args.NotEmpty(iconUrl, nameof(iconUrl));
+
+            const string cmdText = @"
+update 
+	Users
+set
+	IconUrl = @iconUrl
+where
+	UserId = @userId 
+";
+            using var cmd = Connection.CreateCommand();
+            cmd.CommandText = cmdText;
+            cmd.AddParameter("@userId", userId);
+            cmd.AddParameter("@iconUrl", iconUrl);
             cmd.ExecuteNonQuery();
         }
 

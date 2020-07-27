@@ -49,7 +49,8 @@ namespace ChatApp.Models.Services.Imp
                 PasswordType.PlainText,
                 null,
                 model.UserId,
-                model.IsAdministrator
+                model.IsAdministrator,
+                null
             );
 
             _userRepository.Create(user);

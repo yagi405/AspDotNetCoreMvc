@@ -15,6 +15,7 @@
   <ItemGroup>
     <Folder Include="Infrastructure\Logging\Logs\" />
     <Folder Include="Uploads\users\" />
+    <Folder Include="wwwroot\img\users\" />
   </ItemGroup>
 
 </Project>

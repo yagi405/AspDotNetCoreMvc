@@ -12,7 +12,7 @@ namespace ChatApp.Models.Services.Imp
         private readonly IChatLogRepository _chatLogRepository;
         private readonly IUserRepository _userRepository;
 
-        private const string IconUrlBase = "~/img/user/";
+        private const string IconUrlBase = "~/img/app/";
 
         private static readonly IReadOnlyList<string> _defaultIcons = new[]
             {
@@ -59,10 +59,12 @@ namespace ChatApp.Models.Services.Imp
                     PostAt = x.PostAt,
                     Message = x.Message,
                     Name = users.SingleOrDefault(u => u.UserId == x.UserId)?.UserName,
-                    IconUrl = _defaultIcons[
-                        Math.Abs(
-                            x.UserId?.ToUpperInvariant().Select(c => (int)c).Sum() ?? 0
-                        ) % _defaultIcons.Count],
+                    IconUrl = users.SingleOrDefault(u => u.UserId == x.UserId)?.IconUrl ??
+                              _defaultIcons[
+                                    Math.Abs(
+                                        x.UserId?.ToUpperInvariant().Select(c => (int)c).Sum() ?? 0
+                                    ) % _defaultIcons.Count
+                              ],
                     IsMine = string.Equals(x.UserId, userId, StringComparison.OrdinalIgnoreCase)
                 })
                 .ToList();

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using ChatApp.Common;
 using ChatApp.Extensions;
 using ChatApp.Models.Services;
 using ChatApp.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatApp.Controllers
@@ -120,7 +122,7 @@ namespace ChatApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult ChangeIcon(AccountChangeIconViewModel model)
+        public async Task<IActionResult> ChangeIcon(AccountChangeIconViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -141,11 +143,9 @@ namespace ChatApp.Controllers
                 }
 
                 var ext = Path.GetExtension(model.Icon.FileName);
-                var filePath = Path.Combine(_env.ContentRootPath, "Uploads/users", $"{userId}{ext}");
-                using var stream = new FileStream(filePath, FileMode.Create);
-                model.Icon.CopyTo(stream);
+                var iconUrl = await UploadUserIconAsync(model.Icon, $"{userId}{ext}");
 
-                _accountService.ChangeUserIcon(userId, filePath);
+                _accountService.ChangeUserIcon(userId, iconUrl);
                 TempData[AppConst.TempDataKeyMessage] = "アイコンを変更しました。";
 
                 return RedirectToAction(nameof(Index));
@@ -155,6 +155,19 @@ namespace ChatApp.Controllers
                 ModelState.AddModelError("", ex.ToString());
                 return View(model);
             }
+        }
+
+        private async Task<string> UploadUserIconAsync(IFormFile icon, string fileName)
+        {
+            Args.NotNull(icon, nameof(icon));
+            Args.NotEmpty(fileName, nameof(fileName));
+
+            //Storageを用意していないので、WebルートにUpload
+            var folder = Path.Combine(_env.WebRootPath, "img/users");
+            var filePath = Path.Combine(folder, fileName);
+            await using var fileStream = new FileStream(filePath, FileMode.Create);
+            await icon.CopyToAsync(fileStream);
+            return "~/img/users/" + fileName;
         }
     }
 }

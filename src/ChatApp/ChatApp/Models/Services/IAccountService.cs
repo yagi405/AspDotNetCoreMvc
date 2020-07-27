@@ -15,6 +15,6 @@ namespace ChatApp.Models.Services
 
         void ChangePassword(string userId, AccountChangePasswordViewModel model);
 
-        void ChangeUserIcon(string userId, string filePath);
+        void ChangeUserIcon(string userId, string iconUrl);
     }
 }
