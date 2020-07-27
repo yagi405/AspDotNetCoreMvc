@@ -17,21 +17,18 @@ namespace ChatApp.Controllers
             _userService = userService;
         }
 
-        // GET: UserController
         [HttpGet]
         public IActionResult Index()
         {
             return View(_userService.GetIndexViewModel());
         }
 
-        // GET: UserController/Create
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: UserController/Create
         [HttpPost]
         public IActionResult Create(UserCreateViewModel model)
         {
@@ -59,7 +56,6 @@ namespace ChatApp.Controllers
             }
         }
 
-        // GET: UserController/Edit/5
         [HttpGet]
         public IActionResult Edit(string userId)
         {
@@ -71,7 +67,6 @@ namespace ChatApp.Controllers
             return View(model);
         }
 
-        // POST: UserController/Edit/5
         [HttpPost]
         public IActionResult Edit(UserEditViewModel model)
         {
@@ -100,7 +95,6 @@ namespace ChatApp.Controllers
             }
         }
 
-        // GET: UserController/Delete/5
         [HttpGet]
         public IActionResult Delete(string userId)
         {
@@ -112,7 +106,6 @@ namespace ChatApp.Controllers
             return View(model);
         }
 
-        // POST: UserController/Delete/5
         [HttpPost]
         public IActionResult Delete(UserDeleteViewModel model)
         {
