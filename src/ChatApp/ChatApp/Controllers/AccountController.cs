@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using ChatApp.Common;
 using ChatApp.Extensions;
@@ -142,7 +143,20 @@ namespace ChatApp.Controllers
                     return RedirectToAction(nameof(ChangeIcon));
                 }
 
-                var ext = Path.GetExtension(model.Icon.FileName);
+                if (model.Icon.Length > 2097152)
+                {
+                    ModelState.AddModelError("", "ファイルサイズが大きすぎます。");
+                    return View(model);
+                }
+
+                string[] permittedExtensions = { ".jpg", ".png", ".gif" };
+                var ext = Path.GetExtension(model.Icon.FileName)?.ToLowerInvariant();
+                if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
+                {
+                    ModelState.AddModelError("", "サポートされていない拡張子です。");
+                    return View(model);
+                }
+
                 var iconUrl = await UploadUserIconAsync(model.Icon, $"{userId}{ext}");
 
                 _accountService.ChangeUserIcon(userId, iconUrl);
