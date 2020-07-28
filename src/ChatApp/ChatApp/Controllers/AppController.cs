@@ -1,4 +1,5 @@
-﻿using ChatApp.Models.Services;
+﻿using System.Net;
+using ChatApp.Models.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace ChatApp.Controllers
             }
 
             var model = _appService.GetNewErrorViewModel(
-                statusCode,
+                statusCode == 0 ? (int)HttpStatusCode.InternalServerError : statusCode,
                 HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error
                 );
 
