@@ -1,0 +1,8 @@
+﻿.foo {
+  background-color: #ff6a00;
+  width: 200px;
+  height: 200px; }
+  .foo .bar {
+    background-color: yellow;
+    width: 100px;
+    height: 100px; }

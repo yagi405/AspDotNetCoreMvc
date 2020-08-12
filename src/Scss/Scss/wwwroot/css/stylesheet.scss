@@ -1,0 +1,19 @@
+﻿@mixin square($size) {
+    width: $size;
+    height: $size;
+}
+
+$main-color: #ff6a00;
+$accent-color: yellow;
+$parent-size: 200px;
+$child-size: 100px;
+
+.foo {
+    background-color: $main-color;
+    @include square($parent-size);
+
+    .bar {
+        background-color: $accent-color;
+        @include square($child-size)
+    }
+}
