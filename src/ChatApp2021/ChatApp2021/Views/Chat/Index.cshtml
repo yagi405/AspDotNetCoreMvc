@@ -1,0 +1,36 @@
+﻿@model ChatIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="rows grow">
+    <div class="rows grow">
+
+        @foreach (var chatLog in Model.Details)
+        {
+            <div class="content post @(chatLog.IsMine ? "mine" : "")">
+                @if (!chatLog.IsMine)
+                {
+                    <p class="image is-64x64">
+                        <img src="@Url.Content(chatLog.IconUrl)" alt="@chatLog.Name" />
+                    </p>
+                }
+                <div class="chat-log">
+                    <p class="header"><strong>@chatLog.Name</strong> <small>@chatLog.PostAt</small></p>
+                    <p>@chatLog.Message</p>
+                </div>
+                @if (chatLog.IsMine)
+                {
+                    <p class="image is-64x64">
+                        <img src="@Url.Content(chatLog.IconUrl)" alt="@chatLog.Name" />
+                    </p>
+                }
+            </div>
+        }
+    </div>
+    <div class="content">
+:        <textarea class="textarea grow" rows="3" placeholder="ここにテキストを入力（Enterで投稿 Shift+Enterで改行）"></textarea>
+        <button class="button" type="button">Post</button>
+    </div>
+</div>
