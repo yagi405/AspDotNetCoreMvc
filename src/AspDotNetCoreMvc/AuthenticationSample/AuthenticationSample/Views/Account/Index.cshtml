@@ -1,0 +1,17 @@
+﻿@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>認証済みユーザー専用ページの体</h1>
+
+<div>@User.Identity?.IsAuthenticated</div>
+
+<div>@User.Identity?.Name</div>
+
+<div>@User.FindFirstValue(ClaimTypes.NameIdentifier)</div>
+
+<div>
+    <a asp-controller="Auth" asp-action="LogOut">サインアウト</a>
+</div>
